@@ -1,6 +1,13 @@
 日付 : 2024/04/19
 タイトル: Kaggleを使った機械学習の手法の学習と実践
-日程:（何日から何日までの実施内容か・例：2022年4月25日〜29日）
-  2024/04/15  コンペを決め、スケジュールを作成した
+日程: 2024/04/15
+進歩内容: 
+  参加するコンペを決めた
+  スケジュールを作成した
+日程: 2024/04/16~18
+進歩内容:
+  「Multi-Class Prediction of Obesity Risk」のデータとその意味を整理した
+  順序尺度のデータをその順番に応じて整数に変えた
+  「Multi-Class Prediction of Obesity Risk」
 進捗内容: 実際に行った内容を箇条書きで
 参考資料・サイト等: https://github.com/Brensh-Lytcher/Creative_Programming_Projects
