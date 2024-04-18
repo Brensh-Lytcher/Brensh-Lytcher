@@ -17,8 +17,26 @@ Do
      埋め込み法: 構築するモデルそのものに特徴量選択のメカニズムが入っていて、予測に必要な特徴量の係数が大きくなり、予測に必要のない特徴量の係数が0に近づく。
      (思考: ニューラルネットワーク構造や進化論的計算法などのようなものが考えられる。このようなモデルの計算時間がほかのモデルより長いらしい)
      フィルタ法（基準値を0.3とおいて、相関係数の絶対値が0.3以下であれば無相関とみなす）で選んだ特徴量はWeight, CAEC, Ageの3つであった。ラッパー法と埋め込み法はモデルを使うので、今度はそれをやめた。モデルの学習が終わった後にもう一度特徴量選択を行う予定にする。
-  3. 
-
+  3. 目的変数はBMIの肥満判定基準に対応付けられるので、BMIから考える[2]。BMI=体重[kg]/(身長[m]^2)であり、肥満度の判定基準(20歳より年上)は以下のとおりである。
+          BMI         Nutritional status
+  ----------------------------------------
+         < 18.5           Underweight
+      18.5 ~ 24.9        Normal weight
+        25 ~ 29.9         Pre-obesity
+        30 ~ 34.9        Obesity class I
+        35 ~ 39.9        Obesity class II
+          > 40           Obesity class III
+    目的変数は以下のようになっている。
+    Insufficient_Weight
+　　Normal_Weight
+　　Overweight_Level_I
+　　Overweight_Level_II
+　　Obesity_Type_I
+　　Obesity_Type_II
+　　Obesity_Type_III
+    よって、Overweight_Level_IとOverweight_Level_IIを肥満判定基準のPre-obesityに当てはめると、他の変数はすべて対応付けできる。
+    BMI変数（年齢無視）を作って、それと目的変数の間の相関係数が0.9614414063821235になっていて、Weightと目的変数の間の相関係数よりも大きくなった。
+    未成年者の肥満判定基準は年齢と性別によって変わるので、それも考えなければならないが、ネット上では未成年者向けのBMI計算式が見つからない。また、各性別・肥満度の年齢とBMIの散布図によると、成年者でも肥満度の分布がBMIだけでなく、年齢によって変わることもある（特に生育年齢の女性）。
 Check
 
 
@@ -26,4 +44,5 @@ Action
 
 参考文献
 [1] セールスアナリティクス：基本となる3つの特徴選択手法とPythonでの実装，https://www.salesanalytics.co.jp/datascience/datascience145/#Embedded_Method
-[2]
+[2]World Health Organization: A healthy lifestyle - WHO recommendations, https://www.who.int/europe/news-room/fact-sheets/item/a-healthy-lifestyle---who-recommendations
+
