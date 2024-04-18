@@ -60,11 +60,29 @@ Do
       -https://www.kaggle.com/competitions/playground-series-s4e2/discussion/480939
       -https://www.kaggle.com/code/divyam6969/best-solution-multiclass-obesity-prediction
       -https://www.kaggle.com/code/samlakhmani/rank-19-91-076-oof-strategy
+      -https://www.kaggle.com/competitions/playground-series-s4e2/discussion/473874
   6. ディスカッションで見つかった役に立ちそうなキーワード
+      -muscle weighs more than fat -> 肥満度はBMIによる定義の他に、体脂肪率による定義もある
+      -RFM(Relative fat mass) = 64 − (20 × height/waist circumference) + (12 × sex). The value for “sex” is 0 for males and 1 for females.
+      -Assuming that people who eat fewer meals are more likely to be obese, dividing BMI by NCP (number of main meals) could be a helpful predictor. bmioncp = bmi/NCP
+      -In addition to BMI, physicians also use BMI prime, which is simply BMI divided by 25. Microsoft CoPilot suggested multiplying BMI prime by physical activity, which appears to be a better predictor than just physical activity (FAF). bmip_faf = (bmi/25) * FAF
+      -Height has more linear signal, but Weight and Age truly shine with non-linear signal. This could mean, that we can build additional features based on Height and actually provide additional value even to tree-based models. (just a hypothesis)
+      -Don't waste any time for oversampling
+      -Consider linear models in your approaches
+      -Exploit what you can do with the Height column
+      -Blend models on different seeds or train-test splits to account for the randomness
+      -Don't trust the public LB so much, rely on the CV
+      
 Check
-
+  -Planがすべて完成した。
+  -データ整理について、このコンペのデータに欠損がないので、前処理が簡単にできたが、前処理の練習になっていなかった。
+  -フィルタ法でピアソンの相関係数を使ったが、他人のコード・ディスカッションによると、他の係数の使用もよくあるので、今後は多様な係数を試すべきだ。
+  -データの関連性について、BMIのような明らかな関連について調べたが、より上級なスキルを身に付けるためには、より深い関連を見つけ出す能力が不可欠だ。また、データの特徴（連続性、離散性など）にも注目すべきだ。
+  -他人のサイトをたくさん調べたが、すべてを理解する時間がないので、代表的な4つを選んだ。
+  -他人の意見に、有用な情報がたくさんあるので、常に他人の意見に注目すべきだ。そして、他人の意見をさらに発展して、自分のアイデアを作り出すことを忘れてはならない。
 
 Action
+　この後のモデル学習において、モデルとデータの特徴との関連性に注目すべきだ。また、ディスカッションでモデルについての討論もあり、それを用いて学習すべきだ。
 
 参考文献
 [1] セールスアナリティクス: 基本となる3つの特徴選択手法とPythonでの実装, https://www.salesanalytics.co.jp/datascience/datascience145/#Embedded_Method
