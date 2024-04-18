@@ -2,12 +2,19 @@
 タイトル: Kaggleを使った機械学習の手法の学習と実践
 日程: 2024/04/15
 進歩内容: 
-  参加するコンペを決めた
-  スケジュールを作成した
+  -参加するコンペを決めた
+  -スケジュールを作成した
 日程: 2024/04/16~18
 進歩内容:
-  「Multi-Class Prediction of Obesity Risk」のデータとその意味を整理した
-  順序尺度のデータをその順番に応じて整数に変えた
-  「Multi-Class Prediction of Obesity Risk」
-進捗内容: 実際に行った内容を箇条書きで
-参考資料・サイト等: https://github.com/Brensh-Lytcher/Creative_Programming_Projects
+  -「Multi-Class Prediction of Obesity Risk」のデータとその意味を整理した
+  -順序尺度のデータをその順番に応じて整数に変えた
+  -特徴量抽出法を学習して、実践した
+  -データの間の関連性を調べた
+  -よく使われる機械学習の手法を調べた
+  -他人のコードを調べた
+  -ディスカッションで役に立ちそうなキーワードを調べた
+参考資料・サイト等:
+  -https://github.com/Brensh-Lytcher/Creative_Programming_Projects
+  -https://github.com/Brensh-Lytcher/Creative_Programming_Projects/blob/main/Kaggle/Multi-Class_Prediction_of_Obesity_Risk/Note1/Report.txt
+  -https://www.kaggle.com/code/brenshlytcher/multi-class-prediction-of-obesity-risk/edit
+
