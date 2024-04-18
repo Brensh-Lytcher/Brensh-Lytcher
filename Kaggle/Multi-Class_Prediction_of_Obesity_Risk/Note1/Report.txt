@@ -36,13 +36,37 @@ Do
 　　Obesity_Type_III
     よって、Overweight_Level_IとOverweight_Level_IIを肥満判定基準のPre-obesityに当てはめると、他の変数はすべて対応付けできる。
     BMI変数（年齢無視）を作って、それと目的変数の間の相関係数が0.9614414063821235になっていて、Weightと目的変数の間の相関係数よりも大きくなった。
-    未成年者の肥満判定基準は年齢と性別によって変わるので、それも考えなければならないが、ネット上では未成年者向けのBMI計算式が見つからない。また、各性別・肥満度の年齢とBMIの散布図によると、成年者でも肥満度の分布がBMIだけでなく、年齢によって変わることもある（特に生育年齢の女性）。
+    未成年者の肥満判定基準は年齢と性別によって変わるので、それも考えなければならないが、ネット上では未成年者向けのBMI計算式が見つからない。また、各性別・肥満度の年齢とBMIの散布図によると、成年者でも肥満度の分布が年齢によって変わることがある（特に生育年齢の女性）が、その分布が線形になっていないので、それを表す数式が見つからない。
+    カロリー消費量の管理や身体活動の頻度などについて、自分の生活習慣をずっと管理してきたために肥満になっていない人もいれば、肥満になっているために生活習慣を管理した人もいる。これはその特徴量と目的変数の相関が低くなっている理由だと考えられる。しかし、人々の性格が家族から大きな影響を受けるので、家族の肥満履歴とその人の生活習慣を組み合わせると、その人がどのような性格を持つかが推測できる。さらに、性格によってその人が長期的な健康生活を暮らしてきたか、それとも一時的なダイエットを行っているかが推測できるだろう。また、年齢と交通手段からその人の裕福度が推測できる。裕福度と生活習慣からその人の自律力がわかる。裕福度と自律力からその人の健康度（肥満度）が推測できるだろう。しかし、これらの特徴量をどのように組み合わせるべきかがわからない。これを今後の課題にする。
+  4. 機械学習の主な手法[3]
+     教師あり学習
+      -線形回帰 (Linear Regression)
+      -ロジスティック回帰 (Logistic Regression)
+      -決定木 (Decision Trees)
+      -サポートベクターマシン (Support Vector Machines, SVM)
+      -ランダムフォレスト (Random Forest)
+      -ニューラルネットワーク (Neural Networks)
+      -k-近傍法 (k-Nearest Neighbors, k-NN)
+     教師なし学習
+      -クラスタリング (Clustering)
+      -次元削減 (Dimensionality Reduction)
+      -連想ルール学習 (Association Rule Learning)
+     強化学習
+      -Q学習 (Q-Learning)
+      -Deep Q Network (DQN)
+      -Policy Gradient (PG)
+     今回は正解ラベルが与えられているので、教師あり学習を学ぶ。
+  5. スコアの高いコードのサイト
+      -https://www.kaggle.com/competitions/playground-series-s4e2/discussion/480939
+      -https://www.kaggle.com/code/divyam6969/best-solution-multiclass-obesity-prediction
+      -https://www.kaggle.com/code/samlakhmani/rank-19-91-076-oof-strategy
+  6. ディスカッションで見つかった役に立ちそうなキーワード
 Check
 
 
 Action
 
 参考文献
-[1] セールスアナリティクス：基本となる3つの特徴選択手法とPythonでの実装，https://www.salesanalytics.co.jp/datascience/datascience145/#Embedded_Method
-[2]World Health Organization: A healthy lifestyle - WHO recommendations, https://www.who.int/europe/news-room/fact-sheets/item/a-healthy-lifestyle---who-recommendations
-
+[1] セールスアナリティクス: 基本となる3つの特徴選択手法とPythonでの実装, https://www.salesanalytics.co.jp/datascience/datascience145/#Embedded_Method
+[2] World Health Organization: A healthy lifestyle - WHO recommendations, https://www.who.int/europe/news-room/fact-sheets/item/a-healthy-lifestyle---who-recommendations
+[3] 活学（IKIGAKU）ITスクールBlog: 【機械学習手法の総覧】手法13選の理解から実践までのガイド, https://last-data.co.jp/media/machine-learning-technique/#index_id2
