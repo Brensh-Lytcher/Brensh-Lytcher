@@ -33,29 +33,43 @@ Do
         model: sklearn.linear_model.Lasso()
         parameters: 
           -alpha:float, default=1.0
-            
+            E(w)のαを指定
           -fit_intercept:bool, default=True
-
+            LinearRegressionと同じ
           -precompute:bool or array-like of shape (n_features, n_features), default=False
-
+            グラム行列の使用(計算を高速化させる)
           -copy_X:bool, default=True
-
+            LinearRegressionと同じ
           -max_iter:int, default=1000
-
+            誤差を最小化する計算の繰り返し回数
           -tol:float, default=1e-4
-
+            誤算の許容範囲(どれくらい最適化させるか)
           -warm_start:bool, default=False
-
-          -positivebool, default=False
-
-          -random_stateint, RandomState instance, default=None
-
-          -selection{‘cyclic’, ‘random’}, default=’cyclic’
-
+            前回の解を初期値とする
+          -positive:bool, default=False
+            LinearRegressionと同じ
+          -random_state:int, RandomState instance, default=None
+            乱数シード
+          -selection:{‘cyclic’, ‘random’}, default=’cyclic’
+            係数の更新順序(cyclic:順番  random:ランダム)
 
       L2正則化(Ridge回帰)
         大きな特徴量にペナルティを与えて、重みを調整する
         E(w) = 1/2*Σ_i=1 (yi - yi')^2  + α*Σ_i=0 wi^2
+        E(w)を最小にするような係数w0,w1,...,wnを求める
+        model: sklearn.linear_model.Ridge()
+        parameters:
+          -alpha:{float, ndarray of shape (n_targets,)}, default=1.0
+          -fit_intercept:bool, default=True
+          -copy_X:bool, default=True
+          -max_iter:int, default=None
+          -tol:float, default=1e-4
+          -solver:{‘auto’, ‘svd’, ‘cholesky’, ‘lsqr’, ‘sparse_cg’, ‘sag’, ‘saga’, ‘lbfgs’}, default=’auto’
+            使用する計算アルゴリズム
+          -positive:bool, default=False
+          -random_state:int, RandomState instance, default=None
+
+  2. ロジスティック回帰によるクラス分類
 
 Check
 
@@ -64,4 +78,5 @@ Action
 参考文献
 [1] 清水琢也、小川雄太郎: AIエンジニアを目指す人のための機械学習入門，技術評論社，p23-65
 [2] scikit-learn: sklearn.linear_model.LinearRegression, https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html
-[3] 
+[3] scikit-learn: sklearn.linear_model.Lasso, https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Lasso.html
+[4] scikit-learn: sklearn.linear_model.Ridge, https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html
