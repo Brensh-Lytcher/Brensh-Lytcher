@@ -1,8 +1,11 @@
 2024/04/22
 Plan
-モデルの学習と実践
-Do
+  1. 線形回帰 (Linear Regression)の学習と実践
+  2. ロジスティック回帰 (Logistic Regression)の学習と実践
+  3. 決定木 (Decision Trees)の学習と実践
 
+Do
+  1.
 Check
 
 Action
