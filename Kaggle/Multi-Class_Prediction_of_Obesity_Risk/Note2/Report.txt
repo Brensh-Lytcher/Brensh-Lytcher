@@ -2,10 +2,66 @@
 Plan
   1. 線形回帰 (Linear Regression)の学習と実践
   2. ロジスティック回帰 (Logistic Regression)の学習と実践
-  3. 決定木 (Decision Trees)の学習と実践
+  3. サポートベクターマシン (Support Vector Machines, SVM)の学習と実践
 
 Do
-  1.
+  1. 最小二乗法による線形回帰
+      -1つの入力変数のみを使う:単回帰モデル
+      -複数個の入力変数を使う:重回帰モデル
+      回帰直線(平面or超平面): y = w0 + w1*x1 + w2*x2 + ... + wn*xn
+        (w0:バイアスパラメータ, w1,w2,...,wn:重みパラメータ    最小二乗法によって定まる)
+      評価方法: R^2スコア
+                 Σ_i=1 (yi - yi')^2
+      R^2 = 1 - --------------------        (yi'がxiに対するyの予測値, μがyの平均値)
+                 Σ_i=1 (yi - μ)^2
+      model: sklearn.linear_model.LinearRegression()
+      Parameters:
+        -fit_intercept:bool, default=True
+          バイアスパラメータw0の使用
+        -copy_X:bool, default=True
+          入力データをコピーして使用(Falseにすると、モデルを作成した後に、入力データも変わってしまう)
+        -n_jobs:int, default=None
+          計算に使用するジョブ数(Noneは1. -1にすると、すべてのCPUを使って計算)
+        -positive:bool, default=False
+          係数(パラメータw)を正数にする
+          
+      線形回帰モデルの過学習抑止: L1正則化(Lasso), L2正則化(Ridge回帰)
+      L1正則化(Lasso)
+        大量の特徴量の内の不要なものを除く(重みパラメータwiを0にする)
+        E(w) = 1/2*Σ_i=1 (yi - yi')^2  + α*Σ_i=0 |wi|
+        E(w)を最小にするような係数w0,w1,...,wnを求める
+        model: sklearn.linear_model.Lasso()
+        parameters: 
+          -alpha:float, default=1.0
+            
+          -fit_intercept:bool, default=True
+
+          -precompute:bool or array-like of shape (n_features, n_features), default=False
+
+          -copy_X:bool, default=True
+
+          -max_iter:int, default=1000
+
+          -tol:float, default=1e-4
+
+          -warm_start:bool, default=False
+
+          -positivebool, default=False
+
+          -random_stateint, RandomState instance, default=None
+
+          -selection{‘cyclic’, ‘random’}, default=’cyclic’
+
+
+      L2正則化(Ridge回帰)
+        大きな特徴量にペナルティを与えて、重みを調整する
+        E(w) = 1/2*Σ_i=1 (yi - yi')^2  + α*Σ_i=0 wi^2
+
 Check
 
 Action
+
+参考文献
+[1] 清水琢也、小川雄太郎: AIエンジニアを目指す人のための機械学習入門，技術評論社，p23-65
+[2] scikit-learn: sklearn.linear_model.LinearRegression, https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html
+[3] 
