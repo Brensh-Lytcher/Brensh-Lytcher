@@ -28,7 +28,7 @@ Do
       線形回帰モデルの過学習抑止: L1正則化(Lasso), L2正則化(Ridge回帰)
       L1正則化(Lasso)
         大量の特徴量の内の不要なものを除く(重みパラメータwiを0にする)
-        E(w) = 1/2*Σ_i=1 (yi - yi')^2  + α*Σ_i=0 |wi|
+        誤差関数: E(w) = 1/2*Σ_i=1 (yi - yi')^2  + α*Σ_i=0 |wi|
         E(w)を最小にするような係数w0,w1,...,wnを求める
         model: sklearn.linear_model.Lasso()
         parameters: 
@@ -55,7 +55,7 @@ Do
 
       L2正則化(Ridge回帰)
         大きな特徴量にペナルティを与えて、重みを調整す、
-        E(w) = 1/2*Σ_i=1 (yi - yi')^2  + α*Σ_i=0 wi^2
+        誤差関数: E(w) = 1/2*Σ_i=1 (yi - yi')^2  + α*Σ_i=0 wi^2
         E(w)を最小にするような係数w0,w1,...,wnを求める
         model: sklearn.linear_model.Ridge()
         parameters:
@@ -72,8 +72,43 @@ Do
       実践によると、線形回帰は連続な値の予測に有利なモデルであるが、離散な値の予測（予測値を四捨五入などの方法で整数にする）に不利である。今回のコンペ「Multi-Class Prediction of Obesity Risk」の目的変数はObject型であり、離散型の整数で表せるので、線形回帰の予測精度が低いが、説明変数の中に連続型のデータがあるので、説明変数の間の関係の分析に使えるかもしれない。また、他のコンペについて、説明変数に欠損値があることもあるで、その欠損値を補完することに役立つだろう。
 
   2. ロジスティック回帰によるクラス分類
+      最適なロジスティクス関数(シグモイド関数)を求めて、説明変数を入力して、出力が0.5以下であれば0に、0.5より大きければ1にする。
       model: sklearn.linear_model.LogisticRegression()
-      
+      parameters:
+        -penalty:{‘l1’, ‘l2’, ‘elasticnet’, None}, default=’l2’
+          過学習抑止方法, l1がLasso, l2がRidge, elasticnetはl1とl2両方を使う
+        -dual:bool, default=False
+          双対問題
+        -tol:float, default=1e-4
+          収束計算の精度
+        -C:float, default=1.0
+          正則化の強さの逆数
+        -fit_intercept:bool, default=True
+          定数パラメータの使用
+        -intercept_scaling:float, default=1
+          合成特徴量
+        -class_weight:dict or ‘balanced’, default=None
+          特徴量の重さの設定
+        -random_state:int, RandomState instance, default=None
+          Lassoと同じ
+        -solver:{‘lbfgs’, ‘liblinear’, ‘newton-cg’, ‘newton-cholesky’, ‘sag’, ‘saga’}, default=’lbfgs’
+          計算方法。小さなデータセットにはliblnear、大きなデータセットにはsag, saga、複数クラスの問題にはnewton-cg, sag, saga, lbfgsが使われる
+        -max_iter:int, default=100
+          Lassoと同じ
+        -multi_class:{‘auto’, ‘ovr’, ‘multinomial’}, default=’auto’
+          多クラス分類の方法。
+        -verbose:int, default=0
+          冗長性の設定
+        -warm_start:bool, default=False
+          Lassoと同じ
+        -n_jobs:int, default=None
+          LinearRegressionと同じ
+        -l1_ratio:float, default=None
+          penaltyにelasticnetが使われるときのl1の比率
+
+      実践において、max_iterが小さすぎれば、warningが出ることに気づいた。
+      n_jobsが大きくなるほど、計算時間が短くなるとは限らないことを発見した。
+      max_iterを増加させると、予測の精度が上がるが、10000くらいを超えたら、ほとんど上昇しなくなった。
 
 Check
   1. 線形回帰は直線型の回帰式が得られるが、n次関数や指数関数、対数関数、三角関数などの場合もあるので、それらに対応できるようなモデルも学ぶべきだ。また、今度のコンペに線形回帰は役に立たないので、今後は連続値を予測するコンペに参加して、それを実践すべきだ。
@@ -88,3 +123,5 @@ Action
 [2] scikit-learn: sklearn.linear_model.LinearRegression, https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html
 [3] scikit-learn: sklearn.linear_model.Lasso, https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Lasso.html
 [4] scikit-learn: sklearn.linear_model.Ridge, https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html
+[5] DATA SCIENCE LIFE: ロジスティック回帰を多クラス分類に応用する【機械学習入門17】, https://datawokagaku.com/multinomial/
+[6] scikit-learn: sklearn.linear_model.LogisticRegression, https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html
