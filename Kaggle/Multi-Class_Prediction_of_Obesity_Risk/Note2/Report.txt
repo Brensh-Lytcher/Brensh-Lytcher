@@ -2,13 +2,13 @@
 Plan
   1. 線形回帰 (Linear Regression)の学習と実践
   2. ロジスティック回帰 (Logistic Regression)の学習と実践
-  3. サポートベクターマシン (Support Vector Machines Classifier, SVC)の学習と実践
+  3. サポートベクターマシン (Support Vector Machines, SVM)の学習と実践
 
 Do
   1. 最小二乗法による線形回帰
       -1つの入力変数のみを使う:単回帰モデル
       -複数個の入力変数を使う:重回帰モデル
-      回帰直線(平面or超平面): y = w0 + w1*x1 + w2*x2 + ... + wn*xn
+      回帰直線(平面or超平面): y = w0 + w1*x1 + w2*x2 + ... + wn*xn    (x:特徴量)
         (w0:バイアスパラメータ, w1,w2,...,wn:重みパラメータ    最小二乗法によって定まる)
       評価方法: R^2スコア
                  Σ_i=1 (yi - yi')^2
@@ -111,11 +111,40 @@ Do
       max_iterを増加させると、予測の精度が上がるが、10000くらいを超えたら、ほとんど上昇しなくなった。
 
   3. サポートベクターマシンによるクラス分類
-      サポートベクターマシン(SVC)にはハードマージンSVCとソフトマージンSVCの2種類がある。マージンとはクラスを分類する境界線と各クラスの最も近いデータとの距離である。マージンを決める最も近いデータをサポートベクトルという。
-      ハードマージンSVC:
-        -マージンを最大化する方法が使われる。ハードマージンSVCは、訓練データを線形境界線で誤分類なく分離できるケースである。そのメリットはデータをきれいに分類する境界線を学習できることと、汎化性能が高い(サポートベクトルの間にあるデータに対する予測の誤差が小さくなる)ことである。
-      ソフトマージンSVC:
-        -マージン最大化の他に、ペナルティの概念が使われる。ペナルティとは誤分類されたデータととの正しい分類クラスのサポートベクトルの間の距離である。マージすの最大化とペナルティ総和の最小化が同時に行われる。
+      サポートベクターマシン(SVM)には線形SVMと非線形SVMがある。
+      -線形SVC
+        マージンとペナルティによって分類の境界線となる直線（平面・超平面）を決める。マージンとは境界線とそれぞれのクラスの最も近いデータとの間の距離である。また、それらのデータをサポートベクトルという。ペナルティとは誤分類されたデータとその実際に所属するクラスのサポートベクトルの間の距離である。マージンを最大にしながら、ペナルティ総和を最小にするような直線（平面）を分類の境界とする。
+        誤差関数: E = 1/2 * (Σ_k=1 wk^2) + C * (Σ_i=1 ζi)
+        分類条件: yi * (w1 * x1_i + w2 * x2_i + ... + wk * xk_i + b) >= 1 - ζi
+        (注) wkがk番目の特徴量の係数, xk_iがk番目の特徴量のi番目のデータ, ζiがi番目データのペナルティ(誤分類されていなければζi=0), Cがペナルティ総和の係数(マージンとペナルティの重みの調整), yiがi番目データのクラス(-1 or 1)
+        model: sklearn.svm.LinearSVC()  [7]
+        parameters:
+          -penalty:{‘l1’, ‘l2’}, default=’l2’
+            ペナルティの基準
+          -loss:{‘hinge’, ‘squared_hinge’}, default=’squared_hinge’
+            損失関数
+          -dual: “auto” or bool, default=True
+            アルゴリズムの選択
+          -tol:float, default=1e-4
+            停止基準の許容範囲
+          -C:float, default=1.0
+            正式化パラメーター(誤算関数中のC)
+          -multi_class:{‘ovr’, ‘crammer_singer’}, default=’ovr’
+            3つ以上のクラスがある場合の戦略決定。crammer_singerは精度向上が少なく、計算コストが高いので、ほとんど使わない
+          -fit_intercept:bool, default=True
+            切片の使用(分類条件の中のbの使用)
+          -intercept_scaling:float, default=1.0
+            切片スケーリング
+          -class_weight:dict or ‘balanced’, default=None
+            クラスiのパラメータCをclass_weight[i] * Cに設定する
+          -verbose:int, default=0
+            詳細出力を有効にする
+          -random_state:int, RandomState instance or None, default=None
+            乱数シード
+            
+      
+                
+      
       
 
 Check
@@ -133,3 +162,4 @@ Action
 [4] scikit-learn: sklearn.linear_model.Ridge, https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html
 [5] DATA SCIENCE LIFE: ロジスティック回帰を多クラス分類に応用する【機械学習入門17】, https://datawokagaku.com/multinomial/
 [6] scikit-learn: sklearn.linear_model.LogisticRegression, https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html
+[7] scikit-learn: sklearn.svm.LinearSVC, https://scikit-learn.org/stable/modules/generated/sklearn.svm.LinearSVC.html
