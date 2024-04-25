@@ -141,10 +141,12 @@ Do
             詳細出力を有効にする
           -random_state:int, RandomState instance or None, default=None
             乱数シード
-          -
-            
+          -max_iter:int, default=1000
+            計算の繰り返しの最大数
       
-                
+            
+      -非線形SVC
+        非線形SVCは線形SVCの方法にカーネル法(データを高次元特徴空間に写像する)を加えた。
       
       
 
