@@ -3,6 +3,7 @@ Plan
   1. 線形回帰 (Linear Regression)の学習と実践
   2. ロジスティック回帰 (Logistic Regression)の学習と実践
   3. サポートベクターマシン (Support Vector Machines, SVM)の学習と実践
+  4. 決定木 (Decision Trees)の学習と実践
 
 Do
   1. 最小二乗法による線形回帰
@@ -70,6 +71,7 @@ Do
           -random_state:int, RandomState instance, default=None
 
       実践によると、線形回帰は連続な値の予測に有利なモデルであるが、離散な値の予測（予測値を四捨五入などの方法で整数にする）に不利である。今回のコンペ「Multi-Class Prediction of Obesity Risk」の目的変数はObject型であり、離散型の整数で表せるので、線形回帰の予測精度が低いが、説明変数の中に連続型のデータがあるので、説明変数の間の関係の分析に使えるかもしれない。また、他のコンペについて、説明変数に欠損値があることもあるで、その欠損値を補完することに役立つだろう。
+      線形回帰は直線型の回帰式が得られるが、n次関数や指数関数、対数関数、三角関数などの曲線に近いデータ分布の場合もあるので、それらに対応できるようなモデルも学ぶべきだ。
 
   2. ロジスティック回帰によるクラス分類  [5]
       最適なロジスティクス関数(シグモイド関数)を求めて、説明変数を入力して、出力が0.5以下であれば0に、0.5より大きければ1にする。
@@ -138,21 +140,55 @@ Do
           -class_weight:dict or ‘balanced’, default=None
             クラスiのパラメータCをclass_weight[i] * Cに設定する
           -verbose:int, default=0
-            詳細出力を有効にする
+            途中プロセスの表示
           -random_state:int, RandomState instance or None, default=None
             乱数シード
           -max_iter:int, default=1000
             計算の繰り返しの最大数
-      
             
       -非線形SVC
         非線形SVCは線形SVCの方法にカーネル法(データを高次元特徴空間に写像する)を加えた。
-      
-      
+        modle: sklearn.svm.SVC()
+        parameters:
+          -C:float, default=1.0
+            LinearSVCと同じ
+          -kernel={‘linear’, ‘poly’, ‘rbf’, ‘sigmoid’, ‘precomputed’} or callable, default=’rbf’
+            カーネルのタイプ
+          -degree:int, default=3
+            kernel=polyのときのみ使用できる。polynomialの次数を指定する。
+          -gamma:{‘scale’, ‘auto’} or float, default=’scale’
+            kernel=rbf, poly, sigmoidのとき使用できる。カーネル関数中の定数γを指定する。
+          -coef0:float, default=0.0
+            kernel=poly, sigmoidのとき重要。カーネル関数の独立項
+          -shrinking:bool, default=True
+            heuristicを下げる(計算速度調節)
+          -probability:bool, default=False
+            予測確率の計算
+          -tol:float, default=1e-3
+            LinearSVCと同じ
+          -cache_size:float, default=200
+            カーネルのキャッシュサイズ(計算速度調節)
+          -class_weight:dict or ‘balanced’, default=None
+            LinearSVCと同じ
+          -verbose:bool, default=False
+            LinearSVCと同じ
+          -max_iter:int, default=-1
+            LinearSVCと同じ
+          -decision_function_shape:{‘ovo’, ‘ovr’}, default=’ovr’
+            多クラス分類の方法
+          -break_ties:bool, default=False
+            ?意味不明
+          -random_state:int, RandomState instance or None, default=None
+            乱数シード
+
+      パラメーターCについて、Cが大きいほどLinearSVCのスコアが低くなったが、SVCのスコアが高くなった。
+      パラメーターmax_iterについて、max_iterが大きいほど、SVCのスコアが高くなったが、LinearSVCのスコアがほとんど変わらなかった。また、max_iterが3000以上のとき、SVCのスコアがほとんど変わらなくなった。そして、max_iterが低いときに、LinearSVCのスコアがSVCより高いが、max_iterが大きくなると、LinearSVCのスコアがSVCより低くなった。つまり、SVCに必要な計算量がLinearSVCより高いが、極限精度もLinearSVCより高い。
+      SVCのパラメーターkernelについて、polyとrbfのスコアがとても高かったが、linearとsigmodのスコアが極めて低かった。また、precomputedは正方行列の型のデータにしか使えないことも分かった。これはおそらく画像処理に使うものだろう。
 
 Check
-  1. 線形回帰は直線型の回帰式が得られるが、n次関数や指数関数、対数関数、三角関数などの場合もあるので、それらに対応できるようなモデルも学ぶべきだ。また、今度のコンペに線形回帰は役に立たないので、今後は連続値を予測するコンペに参加して、それを実践すべきだ。
+  1. また、今度のコンペに線形回帰は役に立たないので、今後は連続値を予測するコンペに参加して、それを実践すべきだ。
   2. 
+  4. 
 
 Action
 
@@ -166,3 +202,4 @@ Action
 [5] DATA SCIENCE LIFE: ロジスティック回帰を多クラス分類に応用する【機械学習入門17】, https://datawokagaku.com/multinomial/
 [6] scikit-learn: sklearn.linear_model.LogisticRegression, https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html
 [7] scikit-learn: sklearn.svm.LinearSVC, https://scikit-learn.org/stable/modules/generated/sklearn.svm.LinearSVC.html
+[8] scikit-learn: sklearn.svm.SVC, https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html
