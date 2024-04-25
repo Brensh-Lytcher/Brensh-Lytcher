@@ -1,8 +1,8 @@
-2024/04/22
+2024/04/22~26
 Plan
   1. 線形回帰 (Linear Regression)の学習と実践
   2. ロジスティック回帰 (Logistic Regression)の学習と実践
-  3. サポートベクターマシン (Support Vector Machines, SVM)の学習と実践
+  3. サポートベクターマシン (Support Vector Machines Classifier, SVC)の学習と実践
 
 Do
   1. 最小二乗法による線形回帰
@@ -14,7 +14,7 @@ Do
                  Σ_i=1 (yi - yi')^2
       R^2 = 1 - --------------------        (yi'がxiに対するyの予測値, μがyの平均値)
                  Σ_i=1 (yi - μ)^2
-      model: sklearn.linear_model.LinearRegression()
+      model: sklearn.linear_model.LinearRegression()  [2]
       Parameters:
         -fit_intercept:bool, default=True
           バイアスパラメータw0の使用
@@ -30,7 +30,7 @@ Do
         大量の特徴量の内の不要なものを除く(重みパラメータwiを0にする)
         誤差関数: E(w) = 1/2*Σ_i=1 (yi - yi')^2  + α*Σ_i=0 |wi|
         E(w)を最小にするような係数w0,w1,...,wnを求める
-        model: sklearn.linear_model.Lasso()
+        model: sklearn.linear_model.Lasso()  [3]
         parameters: 
           -alpha:float, default=1.0
             E(w)のαを指定
@@ -57,7 +57,7 @@ Do
         大きな特徴量にペナルティを与えて、重みを調整す、
         誤差関数: E(w) = 1/2*Σ_i=1 (yi - yi')^2  + α*Σ_i=0 wi^2
         E(w)を最小にするような係数w0,w1,...,wnを求める
-        model: sklearn.linear_model.Ridge()
+        model: sklearn.linear_model.Ridge()  [4]
         parameters:
           -alpha:{float, ndarray of shape (n_targets,)}, default=1.0
           -fit_intercept:bool, default=True
@@ -71,9 +71,9 @@ Do
 
       実践によると、線形回帰は連続な値の予測に有利なモデルであるが、離散な値の予測（予測値を四捨五入などの方法で整数にする）に不利である。今回のコンペ「Multi-Class Prediction of Obesity Risk」の目的変数はObject型であり、離散型の整数で表せるので、線形回帰の予測精度が低いが、説明変数の中に連続型のデータがあるので、説明変数の間の関係の分析に使えるかもしれない。また、他のコンペについて、説明変数に欠損値があることもあるで、その欠損値を補完することに役立つだろう。
 
-  2. ロジスティック回帰によるクラス分類
+  2. ロジスティック回帰によるクラス分類  [5]
       最適なロジスティクス関数(シグモイド関数)を求めて、説明変数を入力して、出力が0.5以下であれば0に、0.5より大きければ1にする。
-      model: sklearn.linear_model.LogisticRegression()
+      model: sklearn.linear_model.LogisticRegression()  [6]
       parameters:
         -penalty:{‘l1’, ‘l2’, ‘elasticnet’, None}, default=’l2’
           過学習抑止方法, l1がLasso, l2がRidge, elasticnetはl1とl2両方を使う
@@ -109,6 +109,14 @@ Do
       実践において、max_iterが小さすぎれば、warningが出ることに気づいた。
       n_jobsが大きくなるほど、計算時間が短くなるとは限らないことを発見した。
       max_iterを増加させると、予測の精度が上がるが、10000くらいを超えたら、ほとんど上昇しなくなった。
+
+  3. サポートベクターマシンによるクラス分類
+      サポートベクターマシン(SVC)にはハードマージンSVCとソフトマージンSVCの2種類がある。マージンとはクラスを分類する境界線と各クラスの最も近いデータとの距離である。マージンを決める最も近いデータをサポートベクトルという。
+      ハードマージンSVC:
+        -マージンを最大化する方法が使われる。ハードマージンSVCは、訓練データを線形境界線で誤分類なく分離できるケースである。そのメリットはデータをきれいに分類する境界線を学習できることと、汎化性能が高い(サポートベクトルの間にあるデータに対する予測の誤差が小さくなる)ことである。
+      ソフトマージンSVC:
+        -マージン最大化の他に、ペナルティの概念が使われる。ペナルティとは誤分類されたデータととの正しい分類クラスのサポートベクトルの間の距離である。マージすの最大化とペナルティ総和の最小化が同時に行われる。
+      
 
 Check
   1. 線形回帰は直線型の回帰式が得られるが、n次関数や指数関数、対数関数、三角関数などの場合もあるので、それらに対応できるようなモデルも学ぶべきだ。また、今度のコンペに線形回帰は役に立たないので、今後は連続値を予測するコンペに参加して、それを実践すべきだ。
