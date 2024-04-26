@@ -2,10 +2,12 @@
 タイトル: Kaggleを使った機械学習の手法の学習と実践
 日程: 2024/04/22
 進歩内容: 
-  -線形回帰 (Linear Regression)モデルの学習と実践
+  -線形回帰(Linear Regression)のモデルLinearRegression(), Lasso()の学習と実践
 日程: 2024/04/23~24
 進歩内容:
-  -ロジスティック回帰 (Logistic Regression)モデルの学習と実践
-日程:
+  -線形回帰(Linear Regression)のモデルRidge()の学習と実践
+  -ロジスティック回帰(Logistic Regression)のモデルLogisticRegression()の学習と実践
+日程: 2024/04/25
 進歩内容:
-  -サポートベクターマシン (Support Vector Machines, SVM)の学習と実践
+  -サポートベクターマシン(Support Vector Machines, SVM)のモデルLinearSVC(), SVC()の学習と実践
+
