@@ -10,4 +10,5 @@
 日程: 2024/04/25
 進歩内容:
   -サポートベクターマシン(Support Vector Machines, SVM)のモデルLinearSVC(), SVC()の学習と実践
-参考文献
+参考資料・サイト等:
+  -
