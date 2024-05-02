@@ -134,15 +134,58 @@ Do
         -min_samples_leaf:int or float, default=1
           葉を構成するための最小限サンプル数。整数の場合はその数自体、少数の場合は全サンプルサイズに対する割合で指定する
         -min_weight_fraction_leaf:float, default=0.0
-          葉ノードに必要な重みの総和
+          葉ノードに必要な重みの最小加重割合(各サンプルの重みを自分で指定。指定しなければ、全サンプルの重みを均等とみなす。)
         -max_features:int, float or {“sqrt”, “log2”}, default=None
+          考慮する特徴量の数の指定。整数の場合はその数、少数の場合は全体の割合、autoは2乗根、log2はlog2(全特徴量数)。
         -random_state:int, RandomState instance or None, default=None
+          乱数シード
+        -max_leaf_nodes:int, default=None
+          葉の数の最大限指定。(小さくすることで過学習防止)
+        -min_impurity_decrease:float, default=0.0
+          学習の早期停止閾値。(大きくすることで過学習防止)
+        -class_weight:dict, list of dict or “balanced”, default=None
+          各クラスの重みの設定。min_weight_fraction_leafで使う。
+        -ccp_alpha:non-negative float, default=0.0
+          木の複雑さを小さくするもの
+        -monotonic_cst:array-like of int of shape (n_features), default=None
+          各特徴量の単調性制約指定。1は単調増加, 0は制約なし, -1は単調減少
+      決定木分類法が硬くて、確率で決めるべきデータに柔軟に対応しにくく、過学習しやすいと考えられる。一方、カテゴリデータを対応しやすいと考えられる。よって、連続データや確率に対応しやすいモデルと組み合わせて使った方がよい。
+      max_leaf_nodesやclass_weightなどのパラメータをどう指定すべきかが問題である。パラメータの異なる組み合わせ方をすべて試したら、最適解を見つけ出すのにかなり時間がかかる。一方、自分で調べるとしたら、データの間の相関計算やモデルの可視化、データの分布調査などがとても複雑である。
+      決定木を使って、特徴量の重要度を評価することができる。その仕組みは、決定木の中で、それぞれの特徴量がどれくらい多くのノードに使われ、どれくらい大きな効果があるかによって重要度を計算する。特徴量重要度の値はtree.feature_importances_にある。ただし、treeは学習した決定木モデルである。
+
+  3. ランダムフォレスト(Random Forest)
+      ランダムフォレストアンサンブルの手法を使って、複数の決定木モデルを統合して、各モデルの予測結果に基づいて、多数決で最終結果を決める。それぞれの決定木モデルに入れる特徴量がランダムに選ばれ、学習データもランダムに抽出されるため、お互いの欠点を補正することができ、過学習になりにくい。ただし、特徴量抽出は非復元抽出、データセット作成は復元抽出。
+      ただし、ランダムフォレストの使用にあたって、特徴量の多重共線性を排除すべきだ。つまり、互いに相関が極めて大きいデータを削除すべきだ。このような特徴量を使ったら、各特徴量の重要度の評価が大きく影響されて、取り入れるべき特徴量を見逃す可能性がある。
+      model: sklearn.ensemble.RandomForestClassifier()
+      parameters:
+        -criterion:{“gini”, “entropy”, “log_loss”}, default=”gini”
+        -max_depth:int, default=None
+        -min_samples_split:int or float, default=2
+        -min_samples_leaf:int or float, default=1
+        -min_weight_fraction_leaf:float, default=0.0
+        -max_features:{“sqrt”, “log2”, None}, int or float, default=”sqrt”
         -max_leaf_nodes:int, default=None
         -min_impurity_decrease:float, default=0.0
-        -class_weight:dict, list of dict or “balanced”, default=None
+        -random_state:int, RandomState instance or None, default=None
+        -class_weight:{“balanced”, “balanced_subsample”}, dict or list of dicts, default=None
         -ccp_alpha:non-negative float, default=0.0
-        -monotonic_cst:array-like of int of shape (n_features), default=None
-        
+        -monotonic_cstarray-like of int of shape (n_features), default=None
+          以上はDecisionTreeClassifierと同じ
+
+        -n_estimators:int, default=100
+          決定木モデルの数
+        -bootstrap:bool, default=True
+          ブートストラップデータセットを作成するか。(各モデルに専用のデータセットを作成するか。)
+        -oob_score:bool or callable, default=False
+          ブートストラップ法でデータセットを作成するときに、1回も使われないデータをoobデータと呼ぶ。oobデータを使ってモデルの精度を評価するか。
+        -n_jobs:int, default=None
+          モデルを学習させるときに使うジョブの数
+        -verbose:int, default=0
+          モデル学習の詳細を表示する
+        -warm_start:bool, default=False
+          前に作成した決定木を再利用するか
+        -max_samples:int or float, default=None
+          ブートストラップを使うとき、各決定木に使うデータセットのサンプル数。Noneの場合、入力データのサンプル数と同じサンプル数のデータセットを作成する。
             
 Check
 
@@ -153,5 +196,8 @@ Action
 参考文献
 [1] Qiita: Pythonでデータの挙動を見やすくする可視化ツールを作成してみた（分類編）, https://qiita.com/c60evaporator/items/43866a42e09daebb5cc0, 2024/05/02
 [2] mlxtend: plot_decision_regions: Visualize the decision regions of a classifier, https://rasbt.github.io/mlxtend/user_guide/plotting/plot_decision_regions/, 2024/05/02
-[3] 
+[3] 清水琢也、小川雄太郎: AIエンジニアを目指す人のための機械学習入門，技術評論社，p66-81
+[4] scikit-learn: sklearn.tree.DecisionTreeClassifier, https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html, 2024/05/02
+[5] scikit-learn: sklearn.ensemble.RandomForestClassifier, https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html, 2024/05/02
+[6] 
 
