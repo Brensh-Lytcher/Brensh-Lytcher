@@ -8,7 +8,7 @@ Plan
 Do
   1. モデルの可視化
       -決定境界の可視化
-        func: mlxtend.plotting.plot_decision_regions
+        func: mlxtend.plotting.plot_decision_regions()
         parameters:
           -X:array-like, shape=[n_samples, n_features]
             説明変数(numpy.ndarray)
@@ -46,7 +46,79 @@ Do
             不明。matplotlibのscatterと関係があるもの
           -n_jobs:int or None, optional(default=None)
             計算に使用するCPUの数
+
+        func: seaborn_analyzer.classplot.class_separator_plot()
+        parameters:
+          -clf(classifier object implementing)
+            モデル
+          -x:List[str], or np.ndarray
+            説明変数
+          -y:str or np.ndarray
+            目的変数
+          -data:pd.DataFrame
+            入力データ
+          -x_colnames:List[str], default=None
+            dataがpd.DataFrameでない場合に入力データのラベルリストを指定する
+          -x_chart:List[str], default=None
+            説明変数の内のグラフ表示対象
+          -pair_sigmarange:float, default=1.0
+            グラフ表示しない説明変数の分割範囲
+          -pair_sigmainterval:float, default=0.5
+            グラフ表示しない説明変数の1枚当たりの表示範囲
+          -chart_extendsigma:float, default=0.5
+            グラフx,y軸の表示拡張範囲
+          -char_scale:int, default=1
+            グラフ解像度倍率(大きいほど描画速度が速くなるが、画像が粗くなる)
+          -plot_scatter=:{'error', 'class', 'class_error', None}, default='class_error'
+            散布図の描画種類。errorは分類正誤、classはクラスを色表示、class_errorは各クラスの分類正誤の色表示
+          -rounddigit_x3:int, default=2
+            グラフ表示しない変数の小数丸め桁数
+          -scatter_colors:List[str], default=None
+            各クラスのデータの色(plot_scatterがclassまたはclass_errorのときのみに使える)
+          -true_marker:str, default='o'
+            正しく分類されたデータのマーク
+          -false_marker:str, default='x'
+            誤分類されたデータのマーク
+          -cv:int, cross-validation generator, or an iterable, default=None
+            クロスバリデーション分割法を決める。Noneの場合は5-fold cross validation, intの場合はKFoldを使用。
+          -cv_seed:int, default=42
+            cross validationの乱数シード
+          -cv_group:str, default=None
+            グループ分割における対象カラム名
+          -display_cv_indices:int, default=0
+            クロスバリデーション分割の番号
+          -clf_params:dict, default=None
+            モデルに渡すパラメータ
+          -fit_params:dict, default=None
+            モデル学習時のパラメータ
+          -eval_set_selection:{'all', 'test', 'train', 'original', 'original_transformed'}, default=None
+            モデル学習に使うデータを指定
+          -subplot_kws:dict, default=None
+            matplotlib.pyplot.subplotsに渡す引数
+          -contourf_kws:dict, default=None
+            matplotlib.pyplot.contourf(描画用)に渡す引数
+          -scatter_kws:dict, default=None
+            matplotlib.pyplot.scatterに渡す引数
+          -legend_kws:dict, default=None
+            凡例指定
             
+        mlxtend.plotting.plot_decision_regions()はndarray型のデータしか扱えないので、前処理が必要。それに対して、seaborn_analyzer.classplot.class_proba_plot()は前処理の必要がないので、使いやすい
+
+      -クラス確率の可視化
+        func: seaborn_analyzer.classplot.class_proba_plot()
+        parameters:
+          seaborn_analyzer.classplot.class_separator_plot()のparameterをすべて持つ。そのほかのparameterは以下の通りである。
+          -plot_border:bool, default=True
+            分類の境界線の表示
+          -proba_class:str, List[str], default=None
+            確率表示となる対象のクラス名(指定クラスの確率のみを表示する)
+          -proba_cmap_dict:dict[str,str], default=None
+            各クラスの確率図の色(データの色ではなく,範囲の背景色)指定
+          -proba_type:{'contourf', 'contour', 'imshow'}, default='contourf'
+            確率図の種類の指定。imshowはRGB, contourfは塗りつぶしあり等高線, contourは塗りつぶしなし等高線
+          -imshow_kws:dict, default=None
+            matplotlib.pyplot.imshowに渡す引数(proba_type='imshow'のときのみに使用可能)
+      
             
 Check
 
