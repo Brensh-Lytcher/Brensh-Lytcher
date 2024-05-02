@@ -1,11 +1,53 @@
 2024/05/01~03
 Plan
   1. モデルの可視化方法を調べる
-  2. 
+  2. 決定木(Decision Trees)モデルの学習と実践
+  3. ランダムフォレスト(Random Forest)モデルの学習と実践
+  4. ニューラルネットワーク(Neural Networks)モデルの学習と実践
 
 Do
-
-
+  1. モデルの可視化
+      -決定境界の可視化
+        func: mlxtend.plotting.plot_decision_regions
+        parameters:
+          -X:array-like, shape=[n_samples, n_features]
+            説明変数(numpy.ndarray)
+          -y:array-like, shape=[n_samples]
+            目的変数(numpy.ndarray)
+          -clf:Classifer object
+            分類モデル
+          -feature_index:array-like(default:(0,) for 1D, (0,1) otherwise)
+            x,y軸の特徴量
+          -filler_feature_values:dict(default:None)
+            特徴量(説明変数)が3つ以上の場合, 未使用の特徴量の値を指定
+          -filler_feature_ranges
+            filler_feature_valuesで指定した値からのずれの範囲を指定
+          -ax:matplotlib.axes.Axes(default:None)
+            matplotlibのaxと同様
+          -X_highlight:array-like, shape=[n_samples, n_features](default:None)
+            ハイライト表示するデータを指定
+          -zoom_factor:float(default:1.0)
+            不明
+          -hide_spines:bool(default:True)
+            軸の表示
+          -legend:int(default:1)
+            凡例の位置
+          -markers:str(default:'s^oxv<>')
+            データの記号
+          -colors:str(default:'red,blue,limegreen,gray,cyan')
+            色の指定
+          -scatter_kwargs:dict(default:None)
+            不明。matplotlibのscatterと関係があるもの
+          -contourf_kwargs:dict(default:None)
+            不明。matplotlibのcontourfと関係があるもの
+          -contour_kwargs:dict(default:None)
+            不明。matplotlibのcontourと関係があるもの
+          -scatter_highlight_kwargs:dict(default:None)
+            不明。matplotlibのscatterと関係があるもの
+          -n_jobs:int or None, optional(default=None)
+            計算に使用するCPUの数
+            
+            
 Check
 
 
@@ -13,5 +55,7 @@ Action
 
 
 参考文献
-
+[1] Qiita: Pythonでデータの挙動を見やすくする可視化ツールを作成してみた（分類編）, https://qiita.com/c60evaporator/items/43866a42e09daebb5cc0, 2024/05/02
+[2] mlxtend: plot_decision_regions: Visualize the decision regions of a classifier, https://rasbt.github.io/mlxtend/user_guide/plotting/plot_decision_regions/, 2024/05/02
+[3] 
 
