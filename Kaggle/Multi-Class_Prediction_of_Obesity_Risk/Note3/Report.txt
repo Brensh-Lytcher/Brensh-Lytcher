@@ -118,7 +118,31 @@ Do
             確率図の種類の指定。imshowはRGB, contourfは塗りつぶしあり等高線, contourは塗りつぶしなし等高線
           -imshow_kws:dict, default=None
             matplotlib.pyplot.imshowに渡す引数(proba_type='imshow'のときのみに使用可能)
-      
+
+  2. 決定木(Decision Trees)
+      木構造を使って分類する。決定木の最上層のノードを根ノード, 最下層のノードを葉ノードという。また、あるノードから見て, その上のノードが親ノード, その下のノードが子ノードである。
+      model: sklearn.tree.DecisionTreeClassifier()
+      parameters:
+        -criterion:{“gini”, “entropy”, “log_loss”}, default=”gini”
+          データ分割の評価基準
+        -splitter:{“best”, “random”}, default=”best”
+          各ノードでの分割方法
+        -max_depth:int, default=None
+          最大深度
+        -min_samples_split:int or float, default=2
+          ノードを分割するための最小限サンプルサイズ。整数の場合はその数自体、少数の場合は全サンプルサイズに対する割合で指定する
+        -min_samples_leaf:int or float, default=1
+          葉を構成するための最小限サンプル数。整数の場合はその数自体、少数の場合は全サンプルサイズに対する割合で指定する
+        -min_weight_fraction_leaf:float, default=0.0
+          葉ノードに必要な重みの総和
+        -max_features:int, float or {“sqrt”, “log2”}, default=None
+        -random_state:int, RandomState instance or None, default=None
+        -max_leaf_nodes:int, default=None
+        -min_impurity_decrease:float, default=0.0
+        -class_weight:dict, list of dict or “balanced”, default=None
+        -ccp_alpha:non-negative float, default=0.0
+        -monotonic_cst:array-like of int of shape (n_features), default=None
+        
             
 Check
 
