@@ -1,11 +1,10 @@
 日付 : 2024/05/03
 タイトル: Kaggleを使った機械学習の手法の学習と実践
-
-
 日程: 2024/04/30~03
 進歩内容: 
   -モデルの可視化方法を調べる
   -決定木(Decision Trees)モデルの学習と実践
   -ランダムフォレスト(Random Forest)モデルの学習と実践
 参考資料・サイト等:
-
+  -https://github.com/Brensh-Lytcher/Creative_Programming_Projects/blob/main/Kaggle/Multi-Class_Prediction_of_Obesity_Risk/Note3/Report.txt
+  -https://www.kaggle.com/code/brenshlytcher/multi-class-prediction-of-obesity-risk-3/notebook?scriptVersionId=175400076
