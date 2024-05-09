@@ -7,10 +7,80 @@ Plan
 
 Do
   1. ニューラルネットワーク(Neural Networks)
-      
+      ニューラルネットワークは神経を真似して作られたものである。多層パーセプトロン分類器(MLPClassifier)はニューラルネットワークを使ったモデルであり、入力層と隠れ層と出力層の3種類の層からできている。それぞれの層には複数個のニューロンが平行に並べられていて、1つの層のニューロンが前の層のいくつかのニューロンから入力を受け取って計算し、次の層のいくつかのニューロンに出力を与える。モデルに大量のデータを与えて学習させることで、ニューロン中の各定数の大きさを調整し、スコアができるだけ高い状態に変化させる。
+      model: sklearn.neural_network.MLPClassifier()
+      parameters:
+        -hidden_layer_sizes:array-like of shape(n_layers - 2,), default=(100,)
+          隠れ層のサイズ(層の数、ニューロンの数)
+          (n1, n2, n3, ..., nk)niは隠れ層のi層目のニューロン数
+        -activation:{‘identity’, ‘logistic’, ‘tanh’, ‘relu’}, default=’relu’
+          隠れ層の活性化関数
+          identity: f(x) = x
+          logistic: f(x) = 1/(1 + exp(-x))
+          tanh:     f(x) = tanh(x) = (1 - exp(-2x))/(1 + exp(-2x))
+          relu:     f(x) = max(0, x)
+        -solver:{‘lbfgs’, ‘sgd’, ‘adam’}, default=’adam’
+          最適化手法
+          lbfgs: 準ニュートン法。1000以下の小さいデータセットの場合に高速トレーニング可能
+          lgd  : 確率的勾配降下法。訓練データをランダムにシャフルして重みを更新する
+          adam : 期待値計算に指数移動平均を使う
+        -alpha:float, default=0.0001
+          L2正則化のpenalty
+        -batch_size:int, default=’auto’
+          solver = 'sgd' or 'adam'のときのミニバッチサイズ
+          auto  : batch_size = min(200, n_samples)
+        -learning_rate:{‘constant’, ‘invscaling’, ‘adaptive’}, default=’constant’
+          重みの学習率の更新仕方(solver = 'sgd'のときのみ)
+          constant   : 学習率を変更しない
+          invscaling : 時間に伴って学習率を小さくする
+          adaptive   : 最初は学習率を固定し、lossの減少量が連続2回tolより小さければ、学習率を1/5に減らす
+        -learning_rate_init:float, default=0.001
+          重みの学習率の初期値(solver = 'sgd' or 'adam')
+        -power_t:float, default=0.5
+          学習率の減少速度(learning_rate = invscalingのときのみ)
+        -max_iter:int, default=200
+          学習の反復最大回数
+        -shuffle:bool, default=True
+          反復学習のときのデータシャフル
+        -random_state:int, RandomState instance, default=None
+          乱数シード
+        -tol:float, default=1e-4
+          学習の収束値。大きすぎると学習途中で終了、小さすぎると過学習
+        -verbose:bool, default=False
+          学習進歩状況の表示
+        -warm_start:bool, default=False
+          前回が学習結果の利用
+        -momentum:float, default=0.9
+          solver = 'sgd'のときのみ
+          重みの修正量に前回の重みの修正量を加算する
+          0~1の値をとる
+        -nesterovs_momentum:bool, default=True
+          momentum > 0のときのみ
+          学習率更新においてmomentumを考慮するか
+        -early_stopping:bool, default=False
+          学習終了の使用(solver = 'sgd' or 'adam')
+        -validation_fraction:float, default=0.1
+          検証用データの割合
+        -beta_1:float, default=0.9
+          solver = 'adam'のときのみ
+          adamの式のβ1の値
+        -beta_2:float, default=0.999
+          solver = 'adam'のときのみ
+          adamの式のβ2の値
+        -epsilon:float, default=1e-8
+          solver = 'adam'のときのみ
+          adamの式のεの値
+        -n_iter_no_change:int, default=10
+          tolで収束しない場合の最大学習回数(solver = 'sgd' or 'adam')
+        -max_fun:int, default=15000
+          誤差関数の最大値(solver = 'lbfgs')
+          
+
+  2. K-近傍法(k-Nearest Neighbors, k-NN)
 
 
-  2. 
+
+  3. アンサンブルの手法
 
 
 
@@ -21,6 +91,7 @@ Action
   2. 
 
 参考文献
-
+  -scikit-learn: sklearn.neural_network.MLPClassifier, https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html, 2024/05/09
+  -SPJ: ニューラルネットワークのパラメータ設定方法(scikit-learnのMLPClassifier), https://spjai.com/neural-network-parameter/, 2024/05/09
 
 
