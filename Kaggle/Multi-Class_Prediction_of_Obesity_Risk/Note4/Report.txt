@@ -74,11 +74,38 @@ Do
           tolで収束しない場合の最大学習回数(solver = 'sgd' or 'adam')
         -max_fun:int, default=15000
           誤差関数の最大値(solver = 'lbfgs')
-          
+
+      MLPClassifierの計算時間がほかのモデルより長かった。特に、隠れ層のサイズを大きくするほど、計算時間がかなり長くなる。
 
   2. K-近傍法(k-Nearest Neighbors, k-NN)
-
-
+      予測データの近くのK個の学習データの最も一般的なクラスに分類する。距離の算出には一般にユーグリッド距離が使われる(ほかにマンハッタン距離もある)。高次元データに不利である(予測速度が遅くなる)。
+      model: sklearn.neighbors.KNeighborsClassifier()
+      parameters:
+        -n_neighbors:int, default=5
+          kの値(近くのデータ数)
+          大きくすると精度が下がり、小さくするとノイズに弱い
+        -weights:{‘uniform’, ‘distance’}, callable or None, default=’uniform’
+          重みの設定
+          uniform  : 均一な重み
+          distance : 距離に応じた重み
+        -algorithm:{‘auto’, ‘ball_tree’, ‘kd_tree’, ‘brute’}, default=’auto’
+          最も近いデータを選ぶアルゴリズム
+          ball_tree : ball treeアルゴリズム
+          kd_tree   : kd treeアルゴリズム
+          brute     : 総当たり探索
+          auto      : 自動選択(最適アルゴリズムに)
+        -leaf_size:int, default=30
+          algorithm = 'ball_tree' or 'kd_tree'のときのリーフサイズ
+        -p:float, default=2
+          ミンコフスキー距離
+          p = 1 : マンハッタン距離
+          p = 2 : ユーグリッド距離
+        -metric:str or callable, default=’minkowski’
+          距離の測定方法
+        -metric_params:dict, default=None
+          metricの追加
+        -n_jobs:int, default=None
+          計算に使うjob数(CPUの数)
 
   3. アンサンブルの手法
 
@@ -93,5 +120,5 @@ Action
 参考文献
   -scikit-learn: sklearn.neural_network.MLPClassifier, https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html, 2024/05/09
   -SPJ: ニューラルネットワークのパラメータ設定方法(scikit-learnのMLPClassifier), https://spjai.com/neural-network-parameter/, 2024/05/09
-
-
+  -scikit-learn: sklearn.neighbors.KNeighborsClassifier, https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html, 2024/05/09
+  -Qiita: 機械学習 〜 K−近傍法 〜, https://qiita.com/fujin/items/128ed7188f7e7df74f2c, 2024/05/09
