@@ -6,3 +6,5 @@
   - K-近傍法(k-Nearest Neighbors, k-NN)モデルの学習と実践
   - アンサンブル学習の手法の学習
 参考資料・サイト等:
+  -https://github.com/Brensh-Lytcher/Creative_Programming_Projects/blob/main/Kaggle/Multi-Class_Prediction_of_Obesity_Risk/Note4/Report.txt
+  -https://www.kaggle.com/code/brenshlytcher/multi-class-prediction-of-obesity-risk-4?scriptVersionId=176745711
