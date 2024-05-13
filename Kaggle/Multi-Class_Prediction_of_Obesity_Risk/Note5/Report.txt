@@ -1,6 +1,6 @@
 日付 : 2024/05/14
 Plan
-  1. 4月18日に調べてまとめた4つの高スコアコードの打ちの2つを理解して、実践する。
+  1. 4月18日に調べてまとめた4つの高スコアコードを理解して、実践する。
 
 Do
   1. コード1    [1]
@@ -56,6 +56,9 @@ Do
       (8) sklearn.preprocessing.PolynomialFeatures()    [12]
           パラメータdegreeの値をnとする。このとき、PolynomialFeatures.fit_transform(data[feature1, feature2, ..., featurek])はfeature1, feature2, ..., featurekのk個の特徴量からn次以下の項をすべて作り出す。
           考察: data[a, b]の2次以下の項は1, a, b, a^2, a*b, b^2であるが、コード1では生成した特徴量の名称が間違っていたので、それを修正した。この関数は新たな特徴量の生成の便利であるが、a+tbやta/bなどのような式が作れないという欠点があるので、特徴量の作成において、PolynomialFeaturesに頼りすぎないように注意すべきだ。
+
+  2. コード2
+
 
 
 Check
