@@ -1,1 +1,60 @@
+日付 : 2024/04/18
+Plan
+  1. 4月18日に調べてまとめた4つの高スコアコードの打ちの2つを理解して、実践する。
 
+Do
+  1. コード1    [1]
+      コード1はデータの前処理を示している。以下はその前処理の手法である。
+      (1) pandas.cut()    [3]
+          データを与えられた境界値で分割、あるいはn等分する。
+          考察: データをいくつかの階級に分けることで、未成年者と成年者、あるいは高齢者などを分類することが可能である。
+      (2) numpy.log1p()    [4]
+          データの対数をとる。log1pはlog10、log2pはlog100...
+          考察: データの歪度が高い場合、それを正規分布に近似したものに変換できる。データ分布密度が高い範囲における分類を容易にすることができるだろう。numpy.pow()でデータのべき乗を作ることにも同じ役割があると考えられる。
+      (3) sklearn.preprocessing.MinMaxScaler()    [5]
+          説明変数のデータXを下の式によってminとmaxの間の数に変換する。
+            X_new = ((X - X.min(axis=0)) / (X.max(axis=0) - X.min(axis=0))) * (max - min) + min
+          parameters:
+            -feature_range:tuple (min, max), default=(0, 1)
+              変換したデータの範囲を指定する(X_newの式の中のminとmax)
+            -copy:bool, default=True
+              変換してできたデータを新しい特徴量にするか。(Falseだと、元のデータが削除され、新しいデータが代入される)
+            -clip:bool, default=False
+              不明
+          考察: データを指定範囲に収めることで、統計的性質を近似するもの調節して、機械学習の精度が高められる。MinMaxScalar()の他に、以下の手法もある。    [6]
+              スケーリング:
+                -sklearn.preprocessing.MaxAbsScaler()    [7]
+                  データを-1~1の範囲内に収める。計算式はXi_new = Xi / max{abs(X)}
+                -sklearn.preprocessing.RobustScaler()    [8]
+                  データの中央値を0に、第1四分位数と第3四分位数の距離を1にスケーリングする。外れ値を持つデータに強いことが特徴。
+              標準化:
+                -sklearn.preprocessing.StandardScaler()    [9]
+                  データの平均値を0に、標準偏差を1に標準化する
+              非線形変換:
+                -sklearn.preprocessing.PowerTransformer()    [10]
+                  
+                
+      (4)
+      これはデータの
+
+
+Check
+
+
+Action
+
+
+参考文献
+  [1] Kirderf: 4th place solution: Stacking with XGB + Pseudo labeling + metric optimizing., https://www.kaggle.com/competitions/playground-series-s4e2/discussion/480939
+  [2] Divyam6969: (Best Solution😏) Multiclass Obesity🫄Prediction, https://www.kaggle.com/code/divyam6969/best-solution-multiclass-obesity-prediction
+  [3] note.nkmk.me: pandasのcut, qcut関数でビニング処理（ビン分割）, https://note.nkmk.me/python-pandas-cut-qcut-binning/
+  [4] note: 機械学習のための対数変換 - NumPyのlog1p関数, https://note.com/sasayaka360/n/n5d166a796d66
+  [5] scikit-learn: sklearn.preprocessing.MinMaxScaler, https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html
+  [6] PYTHON for PROGRAMMERS: 【Python】scikit-learnによる正規化/標準化/スケーリングの実装方法, https://note-tech.com/python_scaling_standardize/#toc6
+  [7] scikit-learn: sklearn.preprocessing.MaxAbsScaler, https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MaxAbsScaler.html
+  [8] scikit-learn: sklearn.preprocessing.RobustScaler, https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.RobustScaler.html
+  [9] scikit-learn: sklearn.preprocessing.StandardScaler, https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html
+  [10] scikit-learn: sklearn.preprocessing.PowerTransformer, https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PowerTransformer.html
+
+
+  [4] scikit-learn: sklearn.preprocessing.LabelEncoder, https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html
