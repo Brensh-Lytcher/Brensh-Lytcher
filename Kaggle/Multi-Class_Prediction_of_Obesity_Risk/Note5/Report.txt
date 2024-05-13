@@ -42,9 +42,20 @@ Do
                     x = { ln(x + 1)                                (λ = 0, x >= 0)
                           -((-x + 1)^(2 - λ) - 1) / (2 - λ)        (λ != 2, x < 0)
                           -ln(-x + 1)                              (λ = 2, x < 0)
-                    
-      (4)
-      これはデータの
+      (4) sklearn.preprocessing.LabelEncoder()    [11]
+          目的変数の文字列データ(カテゴリ)を整数に変換する。
+          考察: 名義尺度のデータの数値化には役立つが、順序尺度のデータの数値化には不適切だ。現在のコンペの目的変数は適正体重であり、順序尺度のデータであるため、このコードのやり方がよくないと思う。順序尺度のデータの数値化はsklearn.preprocessing.OrdinalEncoder()を使うべきだ。そのパラメータcatogoryを指定することで、カテゴリの順番を指定できる。
+      (5) BMI
+          コード1は適正体重BMIを使っている。これは自分のやり方と同じである。
+      (6) Age * Gender
+          コードはAge * Genderの説明変数を作成するが、説明変数Genderがオブジェクト型のデータなので、掛け算ができない。
+          考察: 年齢×性別はどんが意義があるかがよくわからないが、性別を数値に変換しなければならないので、Age*Genderが意味を持つように性別に適当な数値を与えるべきだ。そこで、性別に-1と1を割り当てる方法が考えられる。つまり、年齢に正負の符号をつけることで、男女を区別できる。この方法によって、モデルを学習させるときに、同じ年齢のデータに対して男女が混合されない。
+      (7) pandas.get_dummies()
+          カテゴリのデータを文字列ごとにboolean型説明変数に変える。たとえば、'A'という説明変数に'abc'と'ABC'の2種類のデータがある場合、それをダミー変数に変えると、'A'の説明変数が削除されて、'A_abc'と'A_ABC'の2種類の説明変数が作成され、'A'の'abc'データに対応する'A_abc'と'A_ABC'のデータがそれぞれ'True'と'False'であり、'A'の'ABC'データに対応する'A_abc'と'A_ABC'のデータがそれぞれ'False'と'True'である。
+          考察: get_dummies()はカテゴリデータの変換が容易にできる。しかし、 Multi-Class Prediction of Obesity Riskのデータには'yes'と'no'の2種類のデータからなる説明変数があり、それをダミー変数に変換すると..._yesと..._noの2つの説明変数が作られるが、'yes'と'no'を直接TrueとFalseに変換することが望ましいので、get_dummiesを使うのは不適切だ。
+      (8) sklearn.preprocessing.PolynomialFeatures()    [12]
+          パラメータdegreeの値をnとする。このとき、PolynomialFeatures.fit_transform(data[feature1, feature2, ..., featurek])はfeature1, feature2, ..., featurekのk個の特徴量からn次以下の項をすべて作り出す。
+          考察: data[a, b]の2次以下の項は1, a, b, a^2, a*b, b^2であるが、コード1では生成した特徴量の名称が間違っていたので、それを修正した。この関数は新たな特徴量の生成の便利であるが、a+tbやta/bなどのような式が作れないという欠点があるので、特徴量の作成において、PolynomialFeaturesに頼りすぎないように注意すべきだ。
 
 
 Check
@@ -64,6 +75,5 @@ Action
   [8] scikit-learn: sklearn.preprocessing.RobustScaler, https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.RobustScaler.html
   [9] scikit-learn: sklearn.preprocessing.StandardScaler, https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html
   [10] scikit-learn: sklearn.preprocessing.PowerTransformer, https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PowerTransformer.html
-
-
-  [4] scikit-learn: sklearn.preprocessing.LabelEncoder, https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html
+  [11] scikit-learn: sklearn.preprocessing.LabelEncoder, https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html
+  [12] scikit-learn: sklearn.preprocessing.PolynomialFeatures, https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PolynomialFeatures.html
