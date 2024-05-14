@@ -5,13 +5,13 @@ Plan
 Do
   1. コード1    [1]
       コード1はデータの前処理を示している。以下はその前処理の手法である。
-      (1) pandas.cut()    [3]
+      (1) pandas.cut()    [2]
           データを与えられた境界値で分割、あるいはn等分する。
           考察: データをいくつかの階級に分けることで、未成年者と成年者、あるいは高齢者などを分類することが可能である。
-      (2) numpy.log1p()    [4]
+      (2) numpy.log1p()    [3]
           データの対数をとる。log1pはlog10、log2pはlog100...
           考察: データの歪度が高い場合、それを正規分布に近似したものに変換できる。データ分布密度が高い範囲における分類を容易にすることができるだろう。numpy.pow()でデータのべき乗を作ることにも同じ役割があると考えられる。
-      (3) sklearn.preprocessing.MinMaxScaler()    [5]
+      (3) sklearn.preprocessing.MinMaxScaler()    [4]
           説明変数のデータXを下の式によってminとmaxの間の数に変換する。
             X_new = ((X - X.min(axis=0)) / (X.max(axis=0) - X.min(axis=0))) * (max - min) + min
           parameters:
@@ -21,17 +21,17 @@ Do
               変換してできたデータを新しい特徴量にするか。(Falseだと、元のデータが削除され、新しいデータが代入される)
             -clip:bool, default=False
               不明
-          考察: データを指定範囲に収めることで、統計的性質を近似するもの調節して、機械学習の精度が高められる。MinMaxScalar()の他に、以下の手法もある。    [6]
+          考察: データを指定範囲に収めることで、統計的性質を近似するもの調節して、機械学習の精度が高められる。MinMaxScalar()の他に、以下の手法もある。    [5]
               スケーリング:
-                -sklearn.preprocessing.MaxAbsScaler()    [7]
+                -sklearn.preprocessing.MaxAbsScaler()    [6]
                   データを-1~1の範囲内に収める。計算式はXi_new = Xi / max{abs(X)}
-                -sklearn.preprocessing.RobustScaler()    [8]
+                -sklearn.preprocessing.RobustScaler()    [7]
                   データの中央値を0に、第1四分位数と第3四分位数の距離を1にスケーリングする。外れ値を持つデータに強いことが特徴。
               標準化:
-                -sklearn.preprocessing.StandardScaler()    [9]
+                -sklearn.preprocessing.StandardScaler()    [8]
                   データの平均値を0に、標準偏差を1に標準化する
               非線形変換:
-                -sklearn.preprocessing.PowerTransformer()    [10]
+                -sklearn.preprocessing.PowerTransformer()    [9]
                   method = 'box-cox'の場合:
                     Box-Cox変換を使って、正数からなるデータの歪度を小さくする。Box-Cox変換の式は以下の式である。
                           (x^λ - 1) / λ      (λ > 0)
@@ -42,7 +42,7 @@ Do
                     x = { ln(x + 1)                                (λ = 0, x >= 0)
                           -((-x + 1)^(2 - λ) - 1) / (2 - λ)        (λ != 2, x < 0)
                           -ln(-x + 1)                              (λ = 2, x < 0)
-      (4) sklearn.preprocessing.LabelEncoder()    [11]
+      (4) sklearn.preprocessing.LabelEncoder()    [10]
           目的変数の文字列データ(カテゴリ)を整数に変換する。
           考察: 名義尺度のデータの数値化には役立つが、順序尺度のデータの数値化には不適切だ。現在のコンペの目的変数は適正体重であり、順序尺度のデータであるため、このコードのやり方がよくないと思う。順序尺度のデータの数値化はsklearn.preprocessing.OrdinalEncoder()を使うべきだ。そのパラメータcatogoryを指定することで、カテゴリの順番を指定できる。
       (5) BMI
@@ -53,15 +53,34 @@ Do
       (7) pandas.get_dummies()
           カテゴリのデータを文字列ごとにboolean型説明変数に変える。たとえば、'A'という説明変数に'abc'と'ABC'の2種類のデータがある場合、それをダミー変数に変えると、'A'の説明変数が削除されて、'A_abc'と'A_ABC'の2種類の説明変数が作成され、'A'の'abc'データに対応する'A_abc'と'A_ABC'のデータがそれぞれ'True'と'False'であり、'A'の'ABC'データに対応する'A_abc'と'A_ABC'のデータがそれぞれ'False'と'True'である。
           考察: get_dummies()はカテゴリデータの変換が容易にできる。しかし、 Multi-Class Prediction of Obesity Riskのデータには'yes'と'no'の2種類のデータからなる説明変数があり、それをダミー変数に変換すると..._yesと..._noの2つの説明変数が作られるが、'yes'と'no'を直接TrueとFalseに変換することが望ましいので、get_dummiesを使うのは不適切だ。
-      (8) sklearn.preprocessing.PolynomialFeatures()    [12]
+      (8) sklearn.preprocessing.PolynomialFeatures()    [11]
           パラメータdegreeの値をnとする。このとき、PolynomialFeatures.fit_transform(data[feature1, feature2, ..., featurek])はfeature1, feature2, ..., featurekのk個の特徴量からn次以下の項をすべて作り出す。
-          考察: data[a, b]の2次以下の項は1, a, b, a^2, a*b, b^2であるが、コード1では生成した特徴量の名称が間違っていたので、それを修正した。この関数は新たな特徴量の生成の便利であるが、a+tbやta/bなどのような式が作れないという欠点があるので、特徴量の作成において、PolynomialFeaturesに頼りすぎないように注意すべきだ。
+     やり方     考察: data[a, b]の2次以下の項は1, a, b, a^2, a*b, b^2であるが、コード1では生成した特徴量の名称が間違っていたので、それを修正した。この関数は新たな特徴量の生成の便利であるが、a+tbやta/bなどのような式が作れないという欠点があるので、特徴量の作成において、PolynomialFeaturesに頼りすぎないように注意すべきだ。
       (9) Obesity or CVD risk (Classify/Regressor/Cluster)
           Multi-Class Prediction of Obesity RiskのデータはObesity or CVD risk (Classify/Regressor/Cluster)のデータセットで学習させたモデルが作り出したデータなので、Multi-Class Prediction of Obesity Riskのコンペのモデルの作成において、Obesity or CVD risk (Classify/Regressor/Cluster)のデータセットも使える。
 
-  2. コード2    [2]
-      コード2はデータの基本情報(データ数、型、最大値、最小値、欠損など)を調べ、データの分布と相関を可視化して分析し、異なるモデルに適切なパラメータを入れて学習させたときのスコアを表示して、それぞれのモデルによる予測値に重みをつけてバギングする。機械学習を最初から最後までかなり詳しく説明している。
-
+  2. コード2    [12]
+      コード2はデータの基本情報(データ数、型、最大値、最小値、欠損など)を調べ、データの分布と相関を可視化して分析し、異なるモデルに適切なパラメータを入れて学習させたときのスコアを表示して、それぞれのモデルによる予測値に重みをつけてバギングする。機械学習の方法を最初から最後までかなり詳しく説明している。以下はコード2にある役に立つ関数である。
+      (1) matplotlib.pyplot.pie()
+          円グラフを描く。目的変数の各カテゴリの割合の表示に有効。
+      (2) seaborn.violinplot()
+          バイオリン図を描く。それぞれの目的変数について、特定の説明変数のデータ分布を表示する。
+          考察: それぞれの目的変数について、説明変数のデータ分布がわかるが、予測するときは説明変数から目的変数を予測するため、この方法は有効ではないだろうと思った。それぞれの説明変数のデータ分布に対応する目的変数カテゴリの積み上げ面グラフの方は説明変数のデータ分布と説明変数各値(各階級)におけるそれぞれの目的変数カテゴリの割合がはっきりわかるので、予測にもっと有効だと考えられる。
+      (3) seaborn.countplot()
+          ある説明変数(カテゴリデータ)の各カテゴリにおいて、目的変数の各カテゴリのデータ数を棒グラフで表示。
+          考察: 説明変数Genderのような各カテゴリのデータ数の差が小さいものをcountplotで表示する場合、データ分布がはっきりわかるが、SMOKEやMTRANSなど片方のカテゴリのデータ数が極端に多い説明変数について、countplotで表示したものは全然役に立たないと考えられる。
+      (4) seaborn.heatmap()
+          データの大きさの大きさを色によって可視化する。
+          考察: コード2では、各説明変数の間の相関係数の大きさを色で表示しているが、データの相関を考えるとき、相関係数の大きさよりも、相関の強さ、つまり相関係数の絶対値こそが大切なので、絶対値の大きさを色で表示したグラフの方は相関の強さがより分かりやすい。
+      (5) seaborn.jointplot()
+          データの散布図と各軸上の分布図。
+          考察: 目的変数の各カテゴリのデータの分布がはっきりわかる。ただし、パラメータkind='kde'とすると、等高線が分布され、データの分布がもっとわかりやすくなる。また、各軸上のデータ分布曲線はバイオリングラフよりわかりやすくなっている。
+      (6) sklearn.decomposition.PCA()
+          主成分分析。高次元のデータから寄与率の高い主成分だけを抽出することで、データの次元を削減する。
+          考察: より信頼性の高いデータが作れるが、一部のデータが捨てられることがあるので、元データと併用すべきだ。
+      (7) 
+          
+          
 
 
 Check
@@ -72,14 +91,15 @@ Action
 
 参考文献
   [1] Kirderf: 4th place solution: Stacking with XGB + Pseudo labeling + metric optimizing., https://www.kaggle.com/competitions/playground-series-s4e2/discussion/480939
-  [2] Divyam6969: (Best Solution😏) Multiclass Obesity🫄Prediction, https://www.kaggle.com/code/divyam6969/best-solution-multiclass-obesity-prediction
-  [3] note.nkmk.me: pandasのcut, qcut関数でビニング処理（ビン分割）, https://note.nkmk.me/python-pandas-cut-qcut-binning/
-  [4] note: 機械学習のための対数変換 - NumPyのlog1p関数, https://note.com/sasayaka360/n/n5d166a796d66
-  [5] scikit-learn: sklearn.preprocessing.MinMaxScaler, https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html
-  [6] PYTHON for PROGRAMMERS: 【Python】scikit-learnによる正規化/標準化/スケーリングの実装方法, https://note-tech.com/python_scaling_standardize/#toc6
-  [7] scikit-learn: sklearn.preprocessing.MaxAbsScaler, https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MaxAbsScaler.html
-  [8] scikit-learn: sklearn.preprocessing.RobustScaler, https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.RobustScaler.html
-  [9] scikit-learn: sklearn.preprocessing.StandardScaler, https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html
-  [10] scikit-learn: sklearn.preprocessing.PowerTransformer, https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PowerTransformer.html
-  [11] scikit-learn: sklearn.preprocessing.LabelEncoder, https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html
-  [12] scikit-learn: sklearn.preprocessing.PolynomialFeatures, https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PolynomialFeatures.html
+  [2] note.nkmk.me: pandasのcut, qcut関数でビニング処理（ビン分割）, https://note.nkmk.me/python-pandas-cut-qcut-binning/
+  [3] note: 機械学習のための対数変換 - NumPyのlog1p関数, https://note.com/sasayaka360/n/n5d166a796d66
+  [4] scikit-learn: sklearn.preprocessing.MinMaxScaler, https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html
+  [5] PYTHON for PROGRAMMERS: 【Python】scikit-learnによる正規化/標準化/スケーリングの実装方法, https://note-tech.com/python_scaling_standardize/#toc6
+  [6] scikit-learn: sklearn.preprocessing.MaxAbsScaler, https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MaxAbsScaler.html
+  [7] scikit-learn: sklearn.preprocessing.RobustScaler, https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.RobustScaler.html
+  [8] scikit-learn: sklearn.preprocessing.StandardScaler, https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html
+  [9] scikit-learn: sklearn.preprocessing.PowerTransformer, https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PowerTransformer.html
+  [10] scikit-learn: sklearn.preprocessing.LabelEncoder, https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html
+  [11] scikit-learn: sklearn.preprocessing.PolynomialFeatures, https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PolynomialFeatures.html
+  [12] Divyam6969: (Best Solution😏) Multiclass Obesity🫄Prediction, https://www.kaggle.com/code/divyam6969/best-solution-multiclass-obesity-prediction
+  
