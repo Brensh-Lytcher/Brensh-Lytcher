@@ -78,7 +78,13 @@ Do
       (6) sklearn.decomposition.PCA()
           主成分分析。高次元のデータから寄与率の高い主成分だけを抽出することで、データの次元を削減する。
           考察: より信頼性の高いデータが作れるが、一部のデータが捨てられることがあるので、元データと併用すべきだ。
-      (7) 
+      (7) sklearn.model_selection.StratifiedKFold()    [13]
+          層状K分割によって、モデルを複数回検証する。モデルに異なるデータを使って検証することで、スコアの分布がわかり、より正確にモデルを評価できる。
+          考察: 交差検証の方法はStratifiedKFoldの他に、K分割交差検証KFold(sklearn.model_selection.KFold())とランダム置換相互検証ShuffleSplit(sklearn.model_selection.ShuffleSplit())もある。KFoldに比べて、StratifiedKFoldは分布が不均衡なデータセットを、分布比率を維持しながら分割する特徴があり、ShuffleSplitはデータ抽出のランダム性を重視し、テストデータの割合を指定できる特徴がある。コード2のデータ分布のヒストグラムより、Multi-Class Prediction of Obesity Riskのデータ分布が不均衡であることがわかるので、StratifiedKFoldが最も適切だと考えられる。
+      (8) pandas.concat()とpandas.DataFrame.drop_duplicates()とpandas.DataFrame.reset_index()
+          データの結合、重複削除とインデックスリセット
+          考察: Multi-Class Prediction of Obesity RiskのデータセットとObesity or CVD risk (Classify/Regressor/Cluster)のデータセットを結合することで、学習データセットのサイズが大きくなり、より良いモデルの学習が可能になる。しかし、2つのデータセットに共通なものが含まれるかもしれないので、重複するものを削除する必要がある。
+      (9) 
           
           
 
@@ -102,4 +108,5 @@ Action
   [10] scikit-learn: sklearn.preprocessing.LabelEncoder, https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html
   [11] scikit-learn: sklearn.preprocessing.PolynomialFeatures, https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PolynomialFeatures.html
   [12] Divyam6969: (Best Solution😏) Multiclass Obesity🫄Prediction, https://www.kaggle.com/code/divyam6969/best-solution-multiclass-obesity-prediction
+  [13] Qiita: sklearnの交差検証の種類とその動作, https://qiita.com/chorome/items/54e99093050a9473a189
   
