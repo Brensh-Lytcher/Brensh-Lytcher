@@ -131,4 +131,4 @@ Action
   [14] zenn: 【機械学習】Optunaを使って効率よくハイパーパラメータを調整しよう, https://zenn.dev/robes/articles/d53ff6d665650f
   [15] Sam: [Rank 19] [91.076%] OOF strategy, https://www.kaggle.com/code/samlakhmani/rank-19-91-076-oof-strategy
   [16] Pystyle: Python – コードの実行時間を計測する方法, https://pystyle.info/python-wall-time-measurement/#outline__3_1
-  [17] Umair Abbasi: Multi-Class Prediction of Obesity Risk, https://www.kaggle.com/competitions/playground-series-s4e2/discussion/473874
+  [17] Umair Abbasi: ✅ 20 simple steps 0.92 Score ✅, https://www.kaggle.com/competitions/playground-series-s4e2/discussion/473874
