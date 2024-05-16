@@ -1,4 +1,4 @@
-日付 : 2024/05/14
+日付 : 2024/05/13~17
 Plan
   1. 4月18日に調べてまとめた4つの高スコアコードを理解して、実践する。
 
@@ -84,10 +84,15 @@ Do
       (8) pandas.concat()とpandas.DataFrame.drop_duplicates()とpandas.DataFrame.reset_index()
           データの結合、重複削除とインデックスリセット
           考察: Multi-Class Prediction of Obesity RiskのデータセットとObesity or CVD risk (Classify/Regressor/Cluster)のデータセットを結合することで、学習データセットのサイズが大きくなり、より良いモデルの学習が可能になる。しかし、2つのデータセットに共通なものが含まれるかもしれないので、重複するものを削除する必要がある。
-      (9) 
-          
-          
+      (9) optuna()    [14]
+          モデルのハイパーパラメータを自動的に最適化する。
+          考察: モデルの力を最大限発揮するために、最適なパラメータを見つけなければならないが、一々自分で調べるのは極めて手間がかかるので、ハイパーパラメータを自動に最適化するoptunaがとても重要だと考えられる。しかし、現在時間がないので、optunaの詳細の学習をやめる。
 
+      以上の関数・手法の他に、年齢と身長を100倍にする関数、モデルをコピーする関数(sklearn.base.clone())がなどもあるが、その役割がよく理解できないので、それらをあきらめた。また、XGBClassifierとCatBoostClassifierはエラーが出た。XGBClassifierのエラーメッセージによると、GPUがないので学習できない。一方、CatBoostClassifierのエラーメッセージが理解できなかった。そして、この2つのモデルを学んでいなかったので、これらによる予測をあきらめた。また、この2つのモデルに基づいたバギングもあきらめた。
+      コード2において、モデルのパラメータ調整、使用する説明変数の選択、モデルの訓練、モデルの評価などをパイプラインと自作関数などを使って行っている。この方法は、コードの各部分が何をしているかが理解しやすい、というメリットがあるので、自分でコードを書くときにも使うべきだ。
+
+  3. コード3    [15]
+      
 
 Check
 
@@ -109,4 +114,4 @@ Action
   [11] scikit-learn: sklearn.preprocessing.PolynomialFeatures, https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PolynomialFeatures.html
   [12] Divyam6969: (Best Solution😏) Multiclass Obesity🫄Prediction, https://www.kaggle.com/code/divyam6969/best-solution-multiclass-obesity-prediction
   [13] Qiita: sklearnの交差検証の種類とその動作, https://qiita.com/chorome/items/54e99093050a9473a189
-  
+  [14] zenn: 【機械学習】Optunaを使って効率よくハイパーパラメータを調整しよう, https://zenn.dev/robes/articles/d53ff6d665650f
