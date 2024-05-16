@@ -105,6 +105,9 @@ Do
 
       以上の関数の他に、pandas.pivot_table()があるが、それはどんなことをしているかが理解できなかった。また、XGBClassifierはコード3と同じくGPUがないことが故に、エラーが生じて、予測結果の統合、つまりアンサンブル学習も実行できなかった。ただし、アンサンブル学習はバギング手法を使って、それぞれのモデルの予測結果の確率(predict_probaの出力)に適切な重みをつけて最終結果を決める。一方、コード2のアンサンブル学習はただ予測結果に重みをつけて最終結果を決めるようになっている。もちろん、コード2で4種類のモデルが使われて、予測結果の確率を使わなくてもよいのに対して、コード3ではLGBMClassifierとXGBClassifierの2つのモデルしか使われていないため、予測結果の確率を使わなければならない。しかし、コード2では予測結果の確率を使ったら、精度がもっと上がるだろう。誤分類データの可視化は訓練用データの散布図に、誤分類された検証用データを赤マークで表示するだけで、しっかりした分析方法になっていないと思った。適切な分析方法として、正しく分類されたデータの予測精度と誤分類されたデータの予測精度の比較、誤分類されたデータとそれに似たデータパターンを持つ正しく分類されたデータの比較の2つの方法が考えられる。
 
+  4. コード4    [17]
+      
+
 Check
 
 
@@ -128,3 +131,4 @@ Action
   [14] zenn: 【機械学習】Optunaを使って効率よくハイパーパラメータを調整しよう, https://zenn.dev/robes/articles/d53ff6d665650f
   [15] Sam: [Rank 19] [91.076%] OOF strategy, https://www.kaggle.com/code/samlakhmani/rank-19-91-076-oof-strategy
   [16] Pystyle: Python – コードの実行時間を計測する方法, https://pystyle.info/python-wall-time-measurement/#outline__3_1
+  [17] Umair Abbasi: Multi-Class Prediction of Obesity Risk, https://www.kaggle.com/competitions/playground-series-s4e2/discussion/473874
