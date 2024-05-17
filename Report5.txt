@@ -5,5 +5,10 @@
   -まとめた高スコアコードのコード1とコード2を学習した。
 日程: 2024/05/16~17
 進歩内容:
-  -まとめた高スコアコードのコード3を学習した。
+  -まとめた高スコアコードのコード3とコード4を学習した。
 参考資料・サイト等:
+  -https://github.com/Brensh-Lytcher/Creative_Programming_Projects/blob/main/Kaggle/Multi-Class_Prediction_of_Obesity_Risk/Note5/Report.txt
+  -https://www.kaggle.com/code/brenshlytcher/multi-class-prediction-of-obesity-risk-5-1
+  -https://www.kaggle.com/code/brenshlytcher/multi-class-prediction-of-obesity-risk-5-2
+  -https://www.kaggle.com/code/brenshlytcher/multi-class-prediction-of-obesity-risk-5-3
+  -https://www.kaggle.com/code/brenshlytcher/multi-class-prediction-of-obesity-risk-5-4
