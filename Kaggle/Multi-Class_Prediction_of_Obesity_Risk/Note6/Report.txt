@@ -13,15 +13,24 @@ Do
       2. RFM(Relative fat mass) = 64 − (20 × height/waist circumference) + (12 × sex). The value for “sex” is 0 for males and 1 for females.
           相対脂肪量RFMは上の式のように腹囲(waist circumference)を使うが、データセットの特徴量に腹囲が含まれていないので、RFMによる予測ができない。
       3. Assuming that people who eat fewer meals are more likely to be obese, dividing BMI by NCP (number of main meals) could be a helpful predictor. bmioncp = bmi/NCP
-          
-      
-      -In addition to BMI, physicians also use BMI prime, which is simply BMI divided by 25. Microsoft CoPilot suggested multiplying BMI prime by physical activity, which appears to be a better predictor than just physical activity (FAF). bmip_faf = (bmi/25) * FAF
-      -Height has more linear signal, but Weight and Age truly shine with non-linear signal. This could mean, that we can build additional features based on Height and actually provide additional value even to tree-based models. (just a hypothesis)
-      -Don't waste any time for oversampling
-      -Consider linear models in your approaches
-      -Exploit what you can do with the Height column
-      -Blend models on different seeds or train-test splits to account for the randomness
-      -Don't trust the public LB so much, rely on the CV
+          RandomForestClassifier(random_state=0)を使って、BMIとbmioncpをそれぞれ特徴量として100回学習させた結果、BMIの重要度がbmioncpより大きいことがわかった。なので、bmioncpを使わないことにした。
+      4. In addition to BMI, physicians also use BMI prime, which is simply BMI divided by 25. Microsoft CoPilot suggested multiplying BMI prime by physical activity, which appears to be a better predictor than just physical activity (FAF). bmip_faf = (bmi/25) * FAF
+          RandomForestClassifier(random_state=0)を使って、BMIとbmip_fafをそれぞれ特徴量として100回予測させた結果、BMIの重要度がbmip_fafより大きいことがわかった。なので、bmip_fafを使わないことにした。
+      5. Height has more linear signal, but Weight and Age truly shine with non-linear signal. This could mean, that we can build additional features based on Height and actually provide additional value even to tree-based models. (just a hypothesis)
+          Heightの線形性より、この特徴量は新しい特徴量を作り出すことに役立つと考えられる。しかし、Heightだけでは多くの特徴量を作ることができないので、WeightとAgeも使って3次以下の特徴量を作り出した。そして、RandomForestClassifier(random_state=0)を使って、それぞれの特徴量を20回予測した結果より、
+
+
+
+      6. Don't waste any time for oversampling
+          oversamplingはデータの範囲と数を大きくすることで、精度を上げる(デジタルによるノイズを小さくする)方法である[3]。しかし、肥満度の評価において、Height, Weight, Age, BMIなどの連続型データにかなり高い精度が求められていないと考えられる。
+      7. Consider linear models in your approaches
+          肥満度は順序尺度のデータになっているが、それはBMIのような比例尺度のデータの範囲の区切ることによって作り出されると考えられる。よって、線形モデルによって新しい連続型の特徴量を作り出してから、適切な閾値によって肥満度を求める、というアンサンブル学習手法の応用が考えられる。
+      8. Exploit what you can do with the Height column
+          これは(1.5.)で話した内容と似ているので、再検討をやめる。
+      9. Blend models on different seeds or train-test splits to account for the randomness
+          これは先週に調べたコード2にある交差検証のことを指しているので、この方法が有効であることが確実である。
+      10. Don't trust the public LB so much, rely on the CV
+          Multi-Class Prediction of Obesity RiskのLeaderboardにはPublicとPrivateの2種類があり、Public Leaderboardはテストデータの2割を使ってモデルを評価し、Private Leaderboardはテストデータの8割を使ってモデルを評価するので、Private Leaderboardの信頼性がPublic Leaderboardより高い。
 
 
 
@@ -34,3 +43,4 @@ Action
 参考文献
   [1] Medical News Hospita Clip: 意外と知らない！　体脂肪はどうやって計算してるの？, https://www.hospita.jp/clip/20161226f/, Accessed 2024/05/20
   [2] VOI: BMI、腹囲、RFM法で体脂肪を計算する方法, https://voi.id/ja/sports/222963, Accessed 2024/05/20
+  [3] JEOL: オーバーサンプリング, https://www.jeol.co.jp/words/nmr/cf6ec6f1242225730e9b2172a7938fc26c6bba8e.html#:~:text=%E8%A6%B3%E6%B8%AC%E7%AF%84%E5%9B%B2%E3%81%A8%E3%83%87%E3%83%BC%E3%82%BF%E3%83%9D%E3%82%A4%E3%83%B3%E3%83%88,%E5%8C%96%E3%81%AE%E5%8A%B9%E6%9E%9C%E3%82%82%E3%81%82%E3%82%8B%E3%80%82, Accessed 2024/05/20
