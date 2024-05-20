@@ -1,1 +1,36 @@
+日付 : 2024/05/20
+Plan
+  1. 4月18日にまとめたキーワード(文)について、それらの機械学習における有効性を調べる
+  2. アンサンブル学習を実践して、独自のモデルを作成する
+  3. 成果のまとめと中間発表の準備
 
+Do
+  1. キーワードの調査
+      1. muscle weighs more than fat
+          肥満度はBMIによる定義の他に、体脂肪率による定義もある。体脂肪率の適正範囲は男性が15~25%、女性が20~30%である。[1]その定義は
+            体脂肪率 = 体脂肪量[kg] / 体重[kg] * 100%
+          である。しかし、Multi-Class Prediction of Obesity Riskが与えるデータセットの特徴量に、体脂肪量が含まれていないので、体脂肪率による予測ができない。
+      2. RFM(Relative fat mass) = 64 − (20 × height/waist circumference) + (12 × sex). The value for “sex” is 0 for males and 1 for females.
+          相対脂肪量RFMは上の式のように腹囲(waist circumference)を使うが、データセットの特徴量に腹囲が含まれていないので、RFMによる予測ができない。
+      3. Assuming that people who eat fewer meals are more likely to be obese, dividing BMI by NCP (number of main meals) could be a helpful predictor. bmioncp = bmi/NCP
+          
+      
+      -In addition to BMI, physicians also use BMI prime, which is simply BMI divided by 25. Microsoft CoPilot suggested multiplying BMI prime by physical activity, which appears to be a better predictor than just physical activity (FAF). bmip_faf = (bmi/25) * FAF
+      -Height has more linear signal, but Weight and Age truly shine with non-linear signal. This could mean, that we can build additional features based on Height and actually provide additional value even to tree-based models. (just a hypothesis)
+      -Don't waste any time for oversampling
+      -Consider linear models in your approaches
+      -Exploit what you can do with the Height column
+      -Blend models on different seeds or train-test splits to account for the randomness
+      -Don't trust the public LB so much, rely on the CV
+
+
+
+Check
+
+
+Action
+
+
+参考文献
+  [1] Medical News Hospita Clip: 意外と知らない！　体脂肪はどうやって計算してるの？, https://www.hospita.jp/clip/20161226f/, Accessed 2024/05/20
+  [2] VOI: BMI、腹囲、RFM法で体脂肪を計算する方法, https://voi.id/ja/sports/222963, Accessed 2024/05/20
