@@ -17,7 +17,7 @@ Do
       4. In addition to BMI, physicians also use BMI prime, which is simply BMI divided by 25. Microsoft CoPilot suggested multiplying BMI prime by physical activity, which appears to be a better predictor than just physical activity (FAF). bmip_faf = (bmi/25) * FAF
           RandomForestClassifier(random_state=0)を使って、BMIとbmip_fafをそれぞれ特徴量として100回予測させた結果、BMIの重要度がbmip_fafより大きいことがわかった。なので、bmip_fafを使わないことにした。
       5. Height has more linear signal, but Weight and Age truly shine with non-linear signal. This could mean, that we can build additional features based on Height and actually provide additional value even to tree-based models. (just a hypothesis)
-          Heightの線形性より、この特徴量は新しい特徴量を作り出すことに役立つと考えられる。しかし、Heightだけでは多くの特徴量を作ることができないので、WeightとAgeも使って3次以下の特徴量を作り出した。そして、RandomForestClassifier(random_state=0)を使って、それぞれの特徴量を20回予測した結果より、
+          Heightの線形性より、この特徴量は新しい特徴量を作り出すことに役立つと考えられる。しかし、Heightだけでは多くの特徴量を作ることができないので、WeightとAgeも使って3次以下の特徴量を作り出した。そして、RandomForestClassifier(random_state=0)を使って、それぞれの特徴量を30回予測した結果より、
 
 
 
@@ -32,7 +32,24 @@ Do
       10. Don't trust the public LB so much, rely on the CV
           Multi-Class Prediction of Obesity RiskのLeaderboardにはPublicとPrivateの2種類があり、Public Leaderboardはテストデータの2割を使ってモデルを評価し、Private Leaderboardはテストデータの8割を使ってモデルを評価するので、Private Leaderboardの信頼性がPublic Leaderboardより高い。
 
-
+  2. アンサンブル学習を実践して、独自のモデルを作成する
+      今までの作業の思考・考察・まとめなどより、独自のモデルの仕組みを以下のように決めた。
+      -Obesity or CVD risk (Classify/Regressor/Cluster)によると、データセットはメキシコ、ペルーとコロンビアの人から集めたものなので、メキシコの女性年齢別出生率に対応して女性の年齢を~19, 20~24, 25~29, 30~34, 35~39, 40~44, 45~の7個の階級に分ける。メキシコの2019年の女性年齢別出生率データは以下のとおりである。(ペルーとコロンビアのデータは見つからなかったので、メキシコのデータだけを使う)[4]
+                     |          年齢別出生率(1000人当たり)
+            -------------------------------------------------------------------------------
+            年齢階級  |   ~19   |  20~24  |  25~29  |  30~34  |  35~39  |  40~44  |  45~
+                     |   50.2  |   91.8  |   88.3  |   64.0  |   34.2  |   8.9   |  0.7
+      -目的変数NObeyesdadのデータを0~6の整数で表すのではなく、BMIの範囲に応じて適切な代表値で表す。
+             BMI       |     NObeyesdad        |  代表値
+        ---------------|-----------------------|----------
+            < 18.5     |  Insufficient_Weight  |   16
+          18.5 ~ 24.9  |  Normal_weight        |   21.5
+          25 ~ 29.9    |  Overweight_Level_I   |   26.5
+                       |  Overweight_Level_II  |   28.5
+          30 ~ 34.9    |  Obesity_Type_I       |   32.5
+          35 ~ 39.9    |  Obesity_Type_II      |   37.5
+            > 40       |  Obesity_Type_III     |   43
+      -
 
 Check
 
@@ -44,3 +61,4 @@ Action
   [1] Medical News Hospita Clip: 意外と知らない！　体脂肪はどうやって計算してるの？, https://www.hospita.jp/clip/20161226f/, Accessed 2024/05/20
   [2] VOI: BMI、腹囲、RFM法で体脂肪を計算する方法, https://voi.id/ja/sports/222963, Accessed 2024/05/20
   [3] JEOL: オーバーサンプリング, https://www.jeol.co.jp/words/nmr/cf6ec6f1242225730e9b2172a7938fc26c6bba8e.html#:~:text=%E8%A6%B3%E6%B8%AC%E7%AF%84%E5%9B%B2%E3%81%A8%E3%83%87%E3%83%BC%E3%82%BF%E3%83%9D%E3%82%A4%E3%83%B3%E3%83%88,%E5%8C%96%E3%81%AE%E5%8A%B9%E6%9E%9C%E3%82%82%E3%81%82%E3%82%8B%E3%80%82, Accessed 2024/05/20
+  [4] 総務省統計局: 世界の統計2024, https://www.stat.go.jp/data/sekai/pdf/2024al.pdf
