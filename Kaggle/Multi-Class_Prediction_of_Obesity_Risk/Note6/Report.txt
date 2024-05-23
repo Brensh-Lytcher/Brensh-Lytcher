@@ -1,4 +1,4 @@
-日付 : 2024/05/20
+日付 : 2024/05/20~24
 Plan
   1. 4月18日にまとめたキーワード(文)について、それらの機械学習における有効性を調べる
   2. アンサンブル学習を実践して、独自のモデルを作成する
@@ -17,10 +17,7 @@ Do
       4. In addition to BMI, physicians also use BMI prime, which is simply BMI divided by 25. Microsoft CoPilot suggested multiplying BMI prime by physical activity, which appears to be a better predictor than just physical activity (FAF). bmip_faf = (bmi/25) * FAF
           RandomForestClassifier(random_state=0)を使って、BMIとbmip_fafをそれぞれ特徴量として100回予測させた結果、BMIの重要度がbmip_fafより大きいことがわかった。なので、bmip_fafを使わないことにした。
       5. Height has more linear signal, but Weight and Age truly shine with non-linear signal. This could mean, that we can build additional features based on Height and actually provide additional value even to tree-based models. (just a hypothesis)
-          Heightの線形性より、この特徴量は新しい特徴量を作り出すことに役立つと考えられる。しかし、Heightだけでは多くの特徴量を作ることができないので、WeightとAgeも使って3次以下の特徴量を作り出した。そして、RandomForestClassifier(random_state=0)を使って、それぞれの特徴量を30回予測した結果より、
-
-
-
+          Heightの線形性より、この特徴量は新しい特徴量を作り出すことに役立つと考えられる。しかし、Heightだけでは多くの特徴量を作ることができないので、WeightとAgeも使って2次以下の特徴量を作り出した。そして、RandomForestClassifier(random_state=0)を使って、それぞれの特徴量を100回予測した結果より、2次の項のうち、Weightの二乗を使った時のスコアの第1、第2、第3四分位数が最も高いことがわかった。しかし、Weightの二乗とWeightの重要度に差があまりないと考えられるので、ここで作り出した特徴量は役に立たないだろう。
       6. Don't waste any time for oversampling
           oversamplingはデータの範囲と数を大きくすることで、精度を上げる(デジタルによるノイズを小さくする)方法である[3]。しかし、肥満度の評価において、Height, Weight, Age, BMIなどの連続型データにかなり高い精度が求められていないと考えられる。
       7. Consider linear models in your approaches
@@ -41,26 +38,26 @@ Do
             年齢階級  |   ~19   |  20~24  |  25~29  |  30~34  |  35~39  |  40~44  |  45~
                      |   50.2  |   91.8  |   88.3  |   64.0  |   34.2  |   8.9   |  0.7
             -------------------------------------------------------------------------------
-          また、男性の年齢を~19, 20~の2つの階級に分ける。
+          また、男女はともに年齢を~19, 20~の2つの階級に分ける。実際のやり方は、'Adult'と'Birthrate'の2つの説明変数を作り、未成年の場合にAdult=0, 成年の場合にAdult=1, Birthrateは女性の場合に1000人当たりの年齢別出生率を、男性の場合に0をとる。
       (2) 目的変数NObeyesdadのデータを0~6の整数で表すのではなく、BMIの範囲に応じて適切な代表値で表す。
              BMI       |     NObeyesdad        |  代表値
         ---------------|-----------------------|----------
             < 18.5     |  Insufficient_Weight  |   16
-          18.5 ~ 24.9  |  Normal_weight        |   21.5
+          18.5 ~ 24.9  |  Normal_Weight        |   21.5
           25 ~ 29.9    |  Overweight_Level_I   |   26.5
                        |  Overweight_Level_II  |   28.5
           30 ~ 34.9    |  Obesity_Type_I       |   32.5
           35 ~ 39.9    |  Obesity_Type_II      |   37.5
             > 40       |  Obesity_Type_III     |   43
-      (3) 線形回帰で、BMI、各階級の年齢、性別および各種生活習慣のデータからNObeyesdadの代表値データを予測するようなLinearRegressionモデルを作り、その出力をLR_BMIとおく。ただし、モデルの出力は必ずNObeyesdadの代表値に一致させることを求めず、対応するBMIの範囲内にあれば十分なので、過学習にならないように十分気を付けなければならない。
-      (4) BMIとNObeyesdadの対応する代表値の偏差をdif_BMIとして、それぞれの年齢・性別階級ごとに、各種生活習慣データからdif_BMIを求めるようなLinearRegressionモデルを作る。その出力をlr_dif_BMIとおく。
+      (3) 線形回帰で、BMI、Age、Adult、Birthrate、性別および各種生活習慣のデータからNObeyesdadの代表値データを予測するようなRidgeモデルを作り、その出力をRid_BMIとおく。ただし、モデルの出力は必ずNObeyesdadの代表値に一致させることを求めず、対応するBMIの範囲内にあれば十分なので、過学習にならないように十分気を付けなければならない。
+      (4) BMIとNObeyesdadの対応する代表値の偏差をdif_BMIとして、年齢、性別、成年、出生率、各種生活習慣データからdif_BMIを求めるようなRidgeモデルを作る。その出力をRid_dif_BMIとおく。
       (5) SVCモデル、RandomForestClassifierモデル、MLPClassifierモデルとKNeighborsClassifierモデルにすべてのデータを使って訓練させ、それぞれのモデルの検証データに対する予測確率をsvc_pro, rfc_pro, mlp_pro, knc_proとおく。この4種類のデータを説明変数として、MLPClassifierモデルを使ってNObeyesdadを予測する。
       説明: 
-        (1) BMIの公式は成人に使うものであり、未成年者に対応しないので、年齢を~19と20~の2つの部分に分ける。また、女性は妊娠によって体重が変わるので、メキシコの女性年齢別出生率に応じて年齢をいくつかの階級に分けた。
+        (1) BMIの公式は成人に使うものであり、未成年者に対応しないので、成人であるかどうかの説明変数を作った。また、女性は妊娠によって体重が変わるので、メキシコの女性年齢別出生率の説明変数を作った。
         (2) NObeyesdadは順序尺度のデータであるが、それをBMIの代表値で表すと、間隔尺度に近似(完全な間隔尺度になれない)するので、情報量が増える。このようにすることで、体重と身長から求めたBMIによる予測が容易になり、線形回帰による生活習慣とBMIからNObeyesdad値の予測が容易になる、と考えられる。
         (3) BMIが同じであっても、生活習慣の違いによって、NObeyesdadが異なることがある。BMIと生活習慣データを線形回帰によって、生活習慣による誤差を埋めた新しいBMI値は、より重要な特徴量になる、と考えられる。
         (4) (3)と同じ目的であるが、異なる方法を使う。BMIとNObeyesdadの差、つまりBMIの誤差を生活習慣データと線形回帰によって求める。
-        (5) スタッキングに近似した手法。それぞれのモデルによる各クラスに分類される確率を特徴量として、ニューラルネットワークモデルを使ってNObeyesdadを予測する。この前の作業において、確率がある閾値以上のデータの予測結果をそのまま維持し、確率が閾値を超えないデータの予測確率をほかのモデルの予測確率と比較して決定する、と考えていたが、NObeyesdadのカテゴリが7種類もあるので、単に確率が高いか低いかではなく、確率が最も高いものと2番目に高いものの間の差がどれくらいか、各カテゴリの確率が均等に分布するかなども考えなければならない。これらの要因は
+        (5) スタッキングに近似した手法。それぞれのモデルによて各クラスに分類される確率を特徴量として、ニューラルネットワークモデルを使ってNObeyesdadを予測する。この前の作業において、確率がある閾値以上のデータの予測結果をそのまま維持し、確率が閾値を超えないデータの予測確率をほかのモデルの予測確率と比較して決定する、というアイデアを考えていたが、NObeyesdadのカテゴリが7種類もあるので、単に確率が高いか低いかではなく、確率が最も高いものと2番目に高いものの間の差がどれくらいか、各カテゴリの確率が均等に分布するか、それぞれのモデルの出力にどれくらいの重みをつけるかなども考えなければならない。これらの要因をひとつづつ深く考えて対策を調べるのはとても手間がかかるが、ニューラルネットワークモデルを使うと簡単にできるので、スタッキング手法の使用にした。
 
 Check
 
