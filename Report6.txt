@@ -1,1 +1,13 @@
-
+日付 : 2024/05/24
+タイトル: Kaggleを使った機械学習の手法の学習と実践
+日程: 2024/05/20~21
+進歩内容:
+  -4月18日にまとめたキーワード(あるいは文)について、それらの機械学習における有効性を調べた
+日程: 2024/05/22~24
+進歩内容:
+  -スタッキング手法を使って、独自のモデルを作成した
+  -成果のまとめと中間発表の準備をした
+参考資料・サイト等:
+  -https://github.com/Brensh-Lytcher/Creative_Programming_Projects/blob/main/Kaggle/Multi-Class_Prediction_of_Obesity_Risk/Note6/Report.txt
+  -https://www.kaggle.com/code/brenshlytcher/multi-class-prediction-of-obesity-risk-6-1
+  -https://www.kaggle.com/code/brenshlytcher/multi-class-prediction-of-obesity-risk-6-2
