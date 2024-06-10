@@ -1,2 +1,11 @@
 日付 : 2024/06/10
 Plan
+  1. 「Binary Classification with a Bank Churn Dataset」の開始
+  2. データ整理
+  3. 前処理
+  4. 各種モデルによる予測を行う
+  5. 特徴量の作成
+
+Do
+  1. 「Binary Classification with a Bank Churn Dataset」の開始
+      
