@@ -1,11 +1,54 @@
 日付 : 2024/06/10
 Plan
   1. 「Binary Classification with a Bank Churn Dataset」の開始
-  2. データ整理
-  3. 前処理
-  4. 各種モデルによる予測を行う
-  5. 特徴量の作成
+  2. 前処理
+  3. 各種モデルによる予測を行う
+  4. 特徴量の作成
 
 Do
   1. 「Binary Classification with a Bank Churn Dataset」の開始
-      
+      今までは機械学習手法の学習を中心として作業を進めてきたが、これからは実践を中心として作業するため、新しいコンペを使う。
+      Binary Classification with a Bank Churn Datasetは2クラス分類のコンペである。
+      LeaderboardのPublicはテストデータの20%、Privateはテストデータの80%で評価する。
+  2. 前処理
+      データセットは「Bank Customer Churn Prediction」のデータセットを使って訓練した深層学習モデルが生成したものである。
+      1. データの数
+          Binary Classification with a Bank Churn Datasetの訓練データとテストデータをそれぞれtrainとtest, Bank Customer Churn Predictionのデータをoriginalをする。
+          train      :   165034
+          test       :   110023
+          original   :   10000
+          データ数が「Multi-Class_Prediction_of_Obesity_Risk」のデータ数(20758個)よりはるかに多くなっているため、データ分割による訓練データ不足の問題が起きないだろう。
+      2. 変数の概要
+          すべてのデータに欠損がないことを確かめた。
+          -CustomerId:      顧客ID
+          -Surname:         名前
+          -CreditScore:     信用 (350 ~ 850)
+          -Geography:       居住国 ('France', 'Germany', 'Spain')
+          -Gender:          性別 ('Female', 'Male')
+          -Age:             年齢 (18 ~ 92)
+          -Tenure:          銀行に在籍する年数 (0 ~ 10)
+          -Balance:         口座残高 (0 ~ 250898.09)
+          -NumOfProducts:   使用する銀行商品数 (1, 2, 3, 4)
+          -HasCrCard:       クレジットカードの所有(1 = yes, 0 = no)
+          -IsActiveMember:  口座をよく使うか (1 = yes, 0 = no)
+          -EstimatedSalary: 推定給与 (11.58 ~ 199992.48)
+          -Exited:          口座解除したか (1 = yes, 0 = no)
+          Exitedが目的変数で、他が説明変数。CustomerIdとSurnameはただの番号と名前なので、目的変数との間の相関が存在しないと考えた。
+          それぞれの説明変数について、testデータの分布がtrainデータの分布にほぼ一致することを確かめた。
+          口座解除した顧客のCustomerIdは他の顧客も使用できるので、同じCustomerIdを持つ顧客がいるかもしれない。CustomerIdが現れる回数が予測に役立つかもしれないので、この後にこれを確かめる。
+      3. データの型変更
+          GeographyとGenderの文字列データを整数型データに変えた。
+      4. データ分布の可視化
+          -pairplotを使って、データ分布の等高線図を作った。
+          
+Check
+
+
+Action
+
+
+
+参考文献
+  1. Kaggle: Binary Classification with a Bank Churn Dataset, https://www.kaggle.com/competitions/playground-series-s4e1
+  2. Kaggle: Bank Customer Churn Prediction, https://www.kaggle.com/datasets/shubhammeshram579/bank-customer-churn-prediction
+
