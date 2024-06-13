@@ -58,14 +58,21 @@ Do
       RandomForestClassifier, KNeighborsClassifier, SVC, MLPClassifierおよびLogisticRegressionを使って予測した。
       -RandomForestClassifierのスコアが最大で0.878前後に達した。
       -KNeighborsClassifierのスコアが最大で0.79前後に達した。
-      -SVCのスコアが最大で
+      -MLPClassifierのニューロン配置を[300, 300, 300]としたときのスコアが0.787前後になった。
+      -LogisticRegressionのスコアが最大で0.788前後に達した。
+      SVCは大規模データを扱うときの計算量が極めて大きくなるため、計算時間もかなっり長くなってしまうので、使わないことにした。
+      以上より、ランダムフォレストのスコアが最も高いことがわかるので、今後は主にこれを使う。また、ニューラルネットワークモデルのパラメーターを調整したらスコアがどうなるかをまだ調べていないので、今後はそのパラメーター最適化もを行うべきだ。
 
 Check
-
+  1. 前処理について、データの概要を調べて、型を変更し、データ分布を可視化して、特徴量の重要度を調べた。
+  2. 特徴量を4つ作成して、その役割を検証した結果、そのうちの2つが有効なものであることが明らかになった。
+  3. ランダムフォレスト、K-近傍法、ニューラルネットワークとロジスティック回帰のモデルを使って予測を行った。
 
 Action
-
-
+  1. 新しく作り出した有効な特徴量が2つしかないので、もっと多くの特徴量を作成するつもりだ。
+  2. Binary Classification with a Bank Churn Datasetのデータセットは深層学習モデルが作り出したものであるので、元データを使ってモデルを作成したり、元データと作成データの同異を調べたりすべきだ。
+  3. ニューラルネットワークモデルのパラメータの最適化を行う。
+  4. ランダムフォレストモデルの未使用のパラメータを調整して最適化させる。
 
 参考文献
   1. Kaggle: Binary Classification with a Bank Churn Dataset, https://www.kaggle.com/competitions/playground-series-s4e1
