@@ -1,1 +1,13 @@
-
+日付 : 2024/06/14
+タイトル: Kaggleを使った機械学習の手法の学習と実践
+日程: 2024/06/10~12
+進歩内容:
+  -「Binary Classification with a Bank Churn Dataset」の開始
+  -データの前処理
+  -新しい特徴量の作成
+日程: 2024/06/13~14
+進歩内容:
+  -4種類のモデルによる予測（主にパラメータの調整)
+参考資料・サイト等:
+  -https://github.com/Brensh-Lytcher/Creative_Programming_Projects/blob/main/Kaggle/Binary_Classification_with_a_Bank_Churn_Dataset/Note1/Report.txt
+  -https://www.kaggle.com/code/brenshlytcher/binary-classification-with-a-bank-churn-dataset-1
