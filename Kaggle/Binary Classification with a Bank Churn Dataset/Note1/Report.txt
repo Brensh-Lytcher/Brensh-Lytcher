@@ -44,16 +44,16 @@ Do
       2.5. 特徴量の重要度
           フィルタ法、ラッパー法と埋め込み法の3つをすべて使って特徴量の重要度を調べ、以下の結果が得られた。
           -AgeとNumOfProductsはExitedとの間に直接な相関があり、予測に極めて重要であることがわかる。
-          -CreditScore, Age, Tenure, Balance, NumOfProducts, IsActiveMember, EstimatedSalaryが重要な特徴量であり、Geography, Gender, HasCrCardがほとんど予測に役立たない。
+          -CreditScore, Geography, Age, Tenure, Balance, NumOfProducts, IsActiveMember, EstimatedSalaryが重要な特徴量であり、Gender, HasCrCardがほとんど予測に役立たない。ただし、GeographyとIsActiveMemberの重要度が0.04~0.05で、比較的低いので、無効な特徴量だと言ってもよいかもしれない。
   3. 特徴量作成
       3.1. 各国の口座解除率
-          各国の口座解除率が異なっているので、国に関する特徴量が予測に役立つだろうと考えた。しかし、国のデータが名義尺度であり、その重要度が低いことも明らかになったので、国ごとの口座解除率を特徴量とした方がよいだろう。この特徴量の名前を"Geographical_Exit_Rate"とした。
+          各国の口座解除率が異なっているので、国に関する特徴量が予測に役立つだろうと考えた。しかし、国のデータが名義尺度であり、その重要度が比較的低いので、国ごとの口座解除率を特徴量とした方がよいだろう。この特徴量の名前を"Geographical_Exit_Rate"とした。
       3.2. CustomerId
           trainとtestのデータセットにおいて、同じCustomerIdが1回しか現れないものもあれば、10回以上現れるものもある。(ただし、「Bank Customer Churn Prediction」のデータセットでは、1つの番号が1回しか現れない。)また、CustomerIdが同じのデータのうち、口座解除した者が1つしかないものもあれば、たくさんあるものもある。そして、人間は特定の数字の組み合わせが好きで、そのような数字からなる口座番号をなるべく手に入れたい、という文化がある(例えば、地域によって、8888が大吉、4444が不吉だと思われることがある)。そのため、trainとtestそれぞれのデータセットにおいて各CustomerIdが現れる回数の特徴量'CustomerId_used_times', trainとtest全体でCustomerIdが現れる回数の特徴量'total_CustomerId_used_times', trainの中で各CustomerIdの口座解除率の特徴量'exit_rate_on_CustomerId'を作った。ただし、口座解除率について、確率論によると、現れる回数が少ないCustomerIdほど、口座解除率の正確率が低いくなるので、その口座解除率を全データの口座解除率と組み合わせた。
       3.3. 口座残高があるか
           2.2.で話したように、Balance=0とBalance>0を表す特徴量'Have_Balance'を作った。
       3.4. 特徴量検証
-          ラッパー法と埋め込み法を使って、作成した特徴量の重要度を調べた。検証の結果、CustomerId_used_times, total_CustomerId_used_times, exit_rate_on_CustomerIdの3つの特徴量の重要度が高く、Geographical_Exit_RateとHave_Balanceの重要度がかなり低いことがわかった。特に、exit_rate_on_CustomerIdが予測のスコアを大きく引き上げた。また、CustomerId_used_timesとtotal_CustomerId_used_timesが近似していて、後者の重要度が前者より大きいため、前者をあきらめるべきだ。したがって、total_CustomerId_used_timesとexit_rate_on_CustomerIdが有効な作成特徴量であり、この後の予測でも使い続けるつもりだ。
+          ラッパー法と埋め込み法を使って、作成した特徴量の重要度を調べた。検証の結果、CustomerId_used_times, total_CustomerId_used_times, exit_rate_on_CustomerIdの3つの特徴量の重要度が高く、Geographical_Exit_RateとHave_Balanceの重要度がかなり低いことがわかった。特に、exit_rate_on_CustomerIdが予測のスコアを大きく引き上げた。また、CustomerId_used_timesとtotal_CustomerId_used_timesが近似していて、後者の重要度が前者より大きいため、前者をあきらめるべきだ。したがって、total_CustomerId_used_timesとexit_rate_on_CustomerIdが有効な作成特徴量であり、この後の予測でも使い続けるつもりだ。また、埋め込み法の結果によると、新しい特徴量も使う場合に、IsActiveMemberの重要度がはとんど変化していなかったのに対して、Geographyの重要度が0.025以下に下がったので、Geographyが無効な特徴量と判断した。
   4. 各種モデルによる予測
       RandomForestClassifier, KNeighborsClassifier, SVC, MLPClassifierおよびLogisticRegressionを使って予測した。
       -RandomForestClassifierのスコアが最大で0.878前後に達した。
