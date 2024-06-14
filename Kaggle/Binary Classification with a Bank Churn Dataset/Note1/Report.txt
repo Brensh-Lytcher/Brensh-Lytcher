@@ -56,10 +56,10 @@ Do
           ラッパー法と埋め込み法を使って、作成した特徴量の重要度を調べた。検証の結果、CustomerId_used_times, total_CustomerId_used_times, exit_rate_on_CustomerIdの3つの特徴量の重要度が高く、Geographical_Exit_RateとHave_Balanceの重要度がかなり低いことがわかった。特に、exit_rate_on_CustomerIdが予測のスコアを大きく引き上げた。また、CustomerId_used_timesとtotal_CustomerId_used_timesが近似していて、後者の重要度が前者より大きいため、前者をあきらめるべきだ。したがって、total_CustomerId_used_timesとexit_rate_on_CustomerIdが有効な作成特徴量であり、この後の予測でも使い続けるつもりだ。また、埋め込み法の結果によると、新しい特徴量も使う場合に、IsActiveMemberの重要度がはとんど変化していなかったのに対して、Geographyの重要度が0.025以下に下がったので、Geographyが無効な特徴量と判断した。
   4. 各種モデルによる予測
       RandomForestClassifier, KNeighborsClassifier, SVC, MLPClassifierおよびLogisticRegressionを使って予測した。
-      -RandomForestClassifierのスコアが最大で0.878前後に達した。
-      -KNeighborsClassifierのスコアが最大で0.79前後に達した。
-      -MLPClassifierのニューロン配置を[300, 300, 300]としたときのスコアが0.787前後になった。
-      -LogisticRegressionのスコアが最大で0.788前後に達した。
+      -RandomForestClassifierのスコアが0.877前後に達した。
+      -KNeighborsClassifierのスコアが0.790前後に達した。
+      -MLPClassifierのニューロン配置を[300, 300, 300]としたときのスコアが0.789前後になった。
+      -LogisticRegressionのスコアが0.788前後に達した。
       SVCは大規模データを扱うときの計算量が極めて大きくなるため、計算時間もかなっり長くなってしまうので、使わないことにした。
       以上より、ランダムフォレストのスコアが最も高いことがわかるので、今後は主にこれを使う。また、ニューラルネットワークモデルのパラメーターを調整したらスコアがどうなるかをまだ調べていないので、今後はそのパラメーター最適化もを行うべきだ。
 
