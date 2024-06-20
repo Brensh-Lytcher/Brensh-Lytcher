@@ -17,15 +17,20 @@ Do
       最適化手法について、準ニュートン法'lbfgs'は、max_iterが300以下のときにスコアが上がり、それ以上のときに下がる。最大スコアが0.880を超えた。勾配降下法'sgd'のスコアは30以上のときに下がる。(30以下はわからない。)最大スコアが0.8775前後であった。適応的モーメント推定'adam'のスコアが常に0.788くらいであり、max_iterを変えてもスコアが変化しない。したがって、準ニュートン法かつmax_iter=300~400が最適である。
       
   2. ランダムフォレストモデルのパラメータの最適化
-
-
+      n_estimators: 3000
+      max_features: 2 or 3(モデルのデータ分割のランダム性によって、1つの値に決まらない)
+      max_depth: 20前後(それ以上は過学習になる)
+      min_samples_leaf: 0.0005以下
+      ランダムフォレストモデルのスコアが最大でも0.88くらいしかない。
 
   3. コンペのデータと根源データの関連性について調べる
-
+      
 
 
   4. 新しい特徴量の作成（探索）
-
+      CustomerIdの現れる回数と口座解除率が予測に役立ったので、Surnameについても同様に調べた。
+      ここで、ある問題点を発見した。作った特徴量が予測に役立つかを判定する方法は、訓練用データの一部を検証データとして予測精度を調べているので、役立つものと判定されても、testデータの予測に役立たない可能性がある。たとえば、CustomerIdの口座解除率は訓練データのCustomerIdごとのExited=1の割合であるため、これが検証データ（訓練データの一部）の予測に役立つのは当然のことであるが、testの予測に役立つとは限らない。なので、作成した特徴量の有効性の検証はtestデータで行うべきだ。
+      ほかに考えられる特徴量作成方法として、Multi-Class Prediction of Obesity Riskで多項式特徴量と主成分分析が学習したので、それを使ってみようと思ったが、ディスカッションでA feature engineering effort that is worth nothing[1]というコードを見つかって、それはoriginal, Polynomial features(多項式特徴量), PCA(主成分分析)とcluster analysis(クラスタ分析)すべてが無効であることを示したので、それらの特徴量の作成をあきらめた。
 
 
 
@@ -36,3 +41,4 @@ Action
 
 
 参考文献
+  [1] Riza Temizel: A feature engineering effort that is worth nothing, https://www.kaggle.com/code/rzatemizel/a-feature-engineering-effort-that-is-worth-nothing/comments
