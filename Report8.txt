@@ -1,1 +1,18 @@
-
+日付 : 2024/06/21
+タイトル: Kaggleを使った機械学習の手法の学習と実践
+日程: 2024/06/17~
+進歩内容:
+  -ニューラルネットワークモデルのパラメータの最適化
+  -ランダムフォレストモデルのパラメータの最適化
+日程: 2024/06/13~14
+進歩内容:
+  -コンペのデータと根源データの関連性について調べる
+  -新しい特徴量の作成（探索）
+  -ディスカッションでヒントを探す
+  -testデータの予測結果の提出
+参考資料・サイト等:
+  -https://github.com/Brensh-Lytcher/Creative_Programming_Projects/blob/main/Kaggle/Binary_Classification_with_a_Bank_Churn_Dataset/Note2/Report.txt
+  -https://www.kaggle.com/code/brenshlytcher/binary-classification-with-a-bank-churn-dataset2-1/notebook
+  -https://www.kaggle.com/code/brenshlytcher/binary-classification-with-a-bank-churn-dataset2-2/notebook
+  -https://www.kaggle.com/code/brenshlytcher/binary-classification-with-a-bank-churn-dataset2-3/notebook
+  -https://www.kaggle.com/code/brenshlytcher/binary-classification-with-a-bank-churn-dataset2-4/notebook
