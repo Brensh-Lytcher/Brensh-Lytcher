@@ -1,1 +1,57 @@
+日付 : 2024/06/24~28
+Plan
+  1. CatBoostClassifierの学習と実践
+  2. CatBoostClassifierのパラメータの調整
+  3. ゴールの調整
 
+Do
+  1. CatBoostClassifierの学習と実践
+      参考文献[1][2]を使って学習した。
+      ライブラリ:
+        catboost.CatBoostClassifier
+      概要・特徴:
+        -決定木を勾配ブースティングしたもの
+        -カテゴリ特徴量を自動処理できる
+        -多くの分野で使われる
+        -ほかのモデルと同じ精度に達するために必要なデータ数が少ない
+        -記述形式データに対応できる
+        -大規模なパラメータ調整の必要がない
+        -過学習しにくい
+      関連モデル:
+        catboost.CatBoost
+        catboost.CatBoostRegressor
+      パラメータ:
+        共通パラメータ:
+          -task_type: 'CPU' or 'GPU'
+            CPUとGPUのどれを使うかを指定
+          -loss_function: string, default='Logloss' or 'MultiClass'
+            誤差評価のメトリクス
+            'Logloss':2クラス分類の場合
+            'MultiClass':多クラス分類の場合
+            その他:'CrossEntropy', 'Precision', 'Recall', 'F', 'F1', 'BalancedAccuracy', 'BalancedErrorRate', 'MCC', 'Accuracy', 'CtrFactor', 'AUC', 'QueryAUC', 'PRAUC', 'NormalizedGini', 'BrierScore', 'HingeLoss', 'HammingLoss', 'ZeroOneLoss', 'Kappa', 'WKappa', 'LogLikelihoodOfPrediction'
+          -custom_metric: string, default=None
+            メトリクス値（メトリクスの情報を調べるために使われる）
+          -eval_metric: string, default=auto
+            過学習評価のメトリクス
+          -iteration: int, default=1000
+            決定木の最大数
+          -learning_rate: float, default=auto
+            学習率
+          -random_seed: int, default=None
+            乱数シード
+          -l2_leaf_reg: float, default=3.0
+            L2正則化係数
+          -bootstrap_type: string, default=auto
+            オブジェクトの重みの設定法
+            'Bayesian', 'Bernoulli', 'MVS', 'Poisson'(supported for GPU only)
+          -bagging_temperature: float, default=1.0
+        
+Check
+
+
+Action
+
+
+参考文献
+  [1] Prashant Banerjee: CatBoost Classifier in Python, https://www.kaggle.com/code/prashant111/catboost-classifier-in-python/notebook, Accessed 2024/06/24
+  [2] CatBoost: https://catboost.ai/en/docs/, Accessed 2024/06/24
