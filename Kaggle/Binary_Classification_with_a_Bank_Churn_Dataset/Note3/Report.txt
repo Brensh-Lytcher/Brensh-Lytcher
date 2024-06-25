@@ -1,8 +1,7 @@
 日付 : 2024/06/24~28
 Plan
   1. CatBoostClassifierの学習と実践
-  2. CatBoostClassifierのパラメータの調整
-  3. ゴールの調整
+  2. ゴールの調整
 
 Do
   1. CatBoostClassifierの学習と実践
@@ -44,8 +43,88 @@ Do
           -bootstrap_type: string, default=auto
             オブジェクトの重みの設定法
             'Bayesian', 'Bernoulli', 'MVS', 'Poisson'(supported for GPU only)
-          -bagging_temperature: float, default=1.0
-        
+          -bagging_temperature: float>=0, default=1.0
+            ベイジアンブートストラップの設定。bootstrap='Bayesian'のときに使う。
+          -subsamle: float, default=auto
+            バギングの係数sample rateの設定。bootstrap='Poisson', 'Bernoulli', 'MVS'のときに使う。
+          -sampling_frequency: 'PerTree' or 'PerTreeLevel', default='PerTreeLevel'
+            決定木の重み調整頻度(CPUのみ)
+          -sampling_unit: 'Object' or 'Group', default='Object'
+            サンプリング方法
+          -mvs_reg: float, default=auto
+            bootstrap_type='MVS'のときに使う。具体的なものはわからない。(CPUのみ)
+          -random_strength: float, default=1
+            ランダム性の強度。過学習防止対策。(CPUのみ)
+          -use_best_model: bool, default=auto
+            不明
+          -best_model_min_trees: int, default=None
+            決定木数の最小値
+          -depth: int, default=6
+            木の深さ
+            CPU: int<=16
+            GPU: int<=8
+          -grow_policy: 'SymmetricTree', 'Depthwise', 'Lossguide', default='SymmetricTree'
+            木構造の生成方法
+          -min_data_in_leaf: int, default=1
+            葉の最小データ数
+          -max_leaves: int, default=31
+            葉の最大数
+          -ignore_features: default=None
+            使用しない特徴量のインデクス
+          -one_hot_max_size: int, default=auto
+            one_hotエンコーディングで、カテゴリ特徴量を与えられたパラメータ値以下の値に変換する
+          -has_time: bool, default=False
+            不明
+          -rsm: float(0, 1], default=1
+            各分割で特徴量を使う割合（残りがランダム的に決まる）
+          -nan_mode: 'Forbidden', 'Min', 'Max', default='Min'
+            欠損データの整理
+            Forbidden: 欠損データを捨てる
+            Min: 最小値に変える
+            Max: 最大値に変える
+          -input_borders: default=None
+            不明
+          -output_borders: default=None
+            不明
+          -fold_permutation_block: int, default=1
+            データセットのブロック化のサイズ。小さいほど計算時間が長くなる。大きい値が精度低下につながる。
+          -leaf_estimation_method: 'Newton', 'Gradient', 'Exact', default=auto
+            葉の分割境界値の計算方法
+          -leaf_estimation_iterations: int, default=None
+            葉の分割境界値の計算ステップ数
+          -leaf_estimation_backtracking: 'No', 'AnyImprovement', 'Armijo', default='AnyImprovement'
+            不明
+            ArmijoがGPUのみに使える
+          -fold_len_multiplier: float>1, default=2
+            不明
+          -approx_on_full_history: bool, default=False
+            過去の訓練結果の応用(CPUのみ)
+          -class_weights: list, dict, default=None
+            各（分類）クラスの重み
+          -class_names: list, strings, default=None
+            分類クラス名指定
+          -auto_class_weights: None, 'Balanced', 'SqrtBalanced', default=None
+            class_weightsの自動設定方法
+          -scale_pos_weight: float, default=1.0
+            2クラス分類の場合、1のクラスの重み
+            多クラス分類の場合、1以上のクラスの重み
+          -boosting_type: 'Ordered', 'Plain', default=auto
+            ブースティングの手法
+          -boost_from_average: bool, default=auto
+            誤差関数の初期化。詳しくは不明。
+          -langevin: bool, default=False
+            Stochastic Gradient Langevin Boostingの使用。(CPUのみ)
+          -diffusion_temperature: float>=0, default=10000
+            Stochastic Gradient Langevin Boostingの係数diffusion temperature。(CPUのみ)
+          -posterior_sampling: bool, default=False
+            不明(CPUのみ)
+          -allow_const_label: bool, default=False
+            不明
+          -score_function: 'Cosine', 'L2', 'NewtonCosine', 'NewtonL2', default='Cosine'
+            次の分割を決めるための値（判別スコア）の種類
+          -monotone_constraints
+          
+          
 Check
 
 
