@@ -168,14 +168,34 @@ Do
           -early_stopping_rounds: int, default=False
             訓練の早期停止(過学習防止)
       CatBoostClassifierにはほかのパラメータもあるが、あまりにも多すぎて、すべてのパラメータを学習すると、作業が進まなくなってしまうので、一部のパラメータに集中して実践しようと思った。
+      cat_features, iteration, learning_rate, bootstrap_type, depth, grow_policy, penalties_coefficient, model_shrink_rateおよびmodel_shrink_modeを使ってモデルを実践した。しかし、検証スコアは最高0.86くらいしかなくて、ランダムフォレストのスコアより低くなっている。そして、CatBoostClassifierには複雑なハイパーパラメータがたくさんあり、自分にとっては難しすぎるので、すでに習得したモデルに注目した方が良いだと考えた。
 
-
+  2. ゴールの調整
+      CatBoostClassifierを実践して、パラメータを最適化しても、test scoreが0.75くらいしかなかった。今までの最高点はニューラルネットワークを使った時の0.79であった。そして、Leaderboard上の順位とスコアによると、以下の情報が得られる。
+      ------------------------------
+        順位   上位%  Private Score
+      ------------------------------
+           1     0%    0.90585
+         363    10%    0.89642
+         726    20%    0.89286
+        1090    30%    0.88941
+        1453    40%    0.88856
+        1816    50%    0.88790
+        2179    60%    0.88589
+        2542    70%    0.87909
+        2906    80%    0.81612
+        3269    90%    0.74318
+        3632   100%    0.11150
+      ------------------------------
+      以上より、上位70%以内のスコアに大きな差がなく、それ以外のスコアに差が大きい。それは、上位70%の方はある程度のスキルを持っていて、下位30%の方はほとんど初心者であることを意味しているのではないか、と思った。なので、自分のゴールを「上位70%に入る」に変えた。
 
 Check
-
+  1. CatBoostClassifierを学習し、実践した。
+  2. ゴールを「上位70%に入る」に変えた。
 
 Action
-
+  1. CatBoostClassifierは予想ほど役に立たなかった。今後は特徴量の作成とアンサンブル学習に注目して作業を進めるべきだ。
+  2. ディスカッションでもっとヒント探すべきだ。
 
 参考文献
   [1] Prashant Banerjee: CatBoost Classifier in Python, https://www.kaggle.com/code/prashant111/catboost-classifier-in-python/notebook, Accessed 2024/06/24
