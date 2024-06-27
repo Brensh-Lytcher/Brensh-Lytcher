@@ -122,8 +122,24 @@ Do
             不明
           -score_function: 'Cosine', 'L2', 'NewtonCosine', 'NewtonL2', default='Cosine'
             次の分割を決めるための値（判別スコア）の種類
-          -monotone_constraints
-          
+          -monotone_constraints: '1', '0', '-1', list, default=None
+            数値型特徴量に単調制限をかける
+            '1':単調増加
+            '-1':単調減少
+            '0':制限なし
+          -feature_weights: list, dict, default=[1,1,...,1]
+            決定木の枝において、分割を決定するときの各特徴量の重み(CPUのみ)
+          -first_feature_use_penalties: list, dict, default=[0,0,...,0]
+            モデルで初めて使われる特徴量にペナルティを与える。(評価関数に使う。CPUのみ)
+          -fixed_binary_splits: list, default=None
+            バイナリデータのうち、決定木の先端に置くものを指定する。(GPUのみ)
+          -penalties_coefficient: float, default=1
+            全ペナルティに共通の係数(CPUのみ)
+          -per_object_feature_penalties: list, dict, default=[0,0,...,0]
+            各特徴量のペナルティ（評価関数に使う。CPUのみ)
+          -model_shrink_rate: float(0, 1], default=auto
+            各モデルの係数を計算する定数(詳しくはわからない。CPUのみ)
+          -model_shrink_mode: 
           
 Check
 
