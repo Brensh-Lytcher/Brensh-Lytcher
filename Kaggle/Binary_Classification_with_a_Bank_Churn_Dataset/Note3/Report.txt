@@ -55,8 +55,6 @@ Do
             bootstrap_type='MVS'のときに使う。具体的なものはわからない。(CPUのみ)
           -random_strength: float, default=1
             ランダム性の強度。過学習防止対策。(CPUのみ)
-          -use_best_model: bool, default=auto
-            不明
           -best_model_min_trees: int, default=None
             決定木数の最小値
           -depth: int, default=6
