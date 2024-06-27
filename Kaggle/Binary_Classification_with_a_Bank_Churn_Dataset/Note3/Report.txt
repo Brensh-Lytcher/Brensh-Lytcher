@@ -32,7 +32,7 @@ Do
             メトリクス値（メトリクスの情報を調べるために使われる）
           -eval_metric: string, default=auto
             過学習評価のメトリクス
-          -iteration: int, default=1000
+          -iterations: int, default=1000
             決定木の最大数
           -learning_rate: float, default=auto
             学習率
@@ -138,9 +138,41 @@ Do
           -per_object_feature_penalties: list, dict, default=[0,0,...,0]
             各特徴量のペナルティ（評価関数に使う。CPUのみ)
           -model_shrink_rate: float(0, 1], default=auto
-            各モデルの係数を計算する定数(詳しくはわからない。CPUのみ)
-          -model_shrink_mode: 
-          
+            モデルの収縮率。モデルの各反復計算の係数を計算するもの(CPUのみ)
+          -model_shrink_mode: 'Constant', 'Decreasing', default='Constant'
+            モデルの各反復計算の係数の計算方法。(CPUのみ)
+          -X: list
+            訓練データ
+          -y: list
+            目的変数データ
+          -cat_features: list, default=None
+            カテゴリデータの列インデクス
+          -text_features: list, default=None
+            テキストデータの列インデクス
+          -embedding_features: list, default=None
+            埋め込みデータの列インデクス(意味が分からない)
+          -sample_weight: list, default=None
+            入力データの各オブジェクトの重み
+          -baseline: list, default=None
+            入力オブジェクトの数式値の配列
+          -use_best_model: bool, default=True
+            意味不明
+          -eval_set:
+            検証データの使用
+          -verbose: bool, int, default=1
+            モデル訓練過程の詳細の出力
+          -logging_level: 'Silent', 'Verbose', 'Info', 'Debug', default=None
+            モデル訓練過程をどれくらい出力するか
+          -plot: bool, default=False
+            モデル訓練過程で、メトリック値、経過時間など特定の情報の出力
+          -plot_file: file_name, default=None
+            モデル訓練過程をファイルに出力する
+          -early_stopping_rounds: int, default=False
+            訓練の早期停止(過学習防止)
+      CatBoostClassifierにはほかのパラメータもあるが、あまりにも多すぎて、すべてのパラメータを学習すると、作業が進まなくなってしまうので、一部のパラメータに集中して実践しようと思った。
+
+
+
 Check
 
 
