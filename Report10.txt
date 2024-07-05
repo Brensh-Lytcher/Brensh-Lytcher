@@ -6,4 +6,4 @@
   -新しい特徴量の作成について調べた
 参考資料・サイト等:
   -https://github.com/Brensh-Lytcher/Creative_Programming_Projects/blob/main/Kaggle/Binary_Classification_with_a_Bank_Churn_Dataset/Note4/Report.txt
-  -https://www.kaggle.com/code/brenshlytcher/binary-classification-with-a-bank-churn-dataset4/notebook
+  -https://www.kaggle.com/code/brenshlytcher/binary-classification-with-a-bank-churn-dataset4?scriptVersionId=186898059
