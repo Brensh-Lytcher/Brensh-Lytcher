@@ -1,1 +1,13 @@
-
+日付 : 2024/07/19
+タイトル: Kaggleを使った機械学習の手法の学習と実践
+日程: 2024/07/16
+進歩内容:
+  -回帰モデルと分類モデルのスコアの違いの調査
+  -作成した組み合わせ特徴量の有効性の確認
+日程: 2024/07/17~18
+進歩内容:
+  -特徴量選択とパラメータ最適化を使った予測
+  -ゴールを達成した
+参考資料・サイト等:
+  -https://github.com/Brensh-Lytcher/Creative_Programming_Projects/blob/main/Kaggle/Binary_Classification_with_a_Bank_Churn_Dataset/Note6/Report.txt
+  -https://www.kaggle.com/code/brenshlytcher/binary-classification-with-a-bank-churn-dataset6-2
